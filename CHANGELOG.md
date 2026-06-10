@@ -7,6 +7,20 @@ Version scheme: `MAJOR.MINOR.PATCH` — see [CLAUDE.md](./CLAUDE.md) for rules.
 
 ---
 
+## [1.0.5] — 2026-06-10
+
+### Added
+- `paper-research`: Document/batch quick mode — parse arXiv IDs/DOIs directly from `.docx` or spreadsheet, skip Stage 1 search
+- `paper-research`: Language prompt in Stage 3 (`en` / `zh` / `zh-en`), default English
+- `paper-research`: PDF parallel download rule — require absolute paths when using `curl &` in parallel
+- `paper-research`: Batch status report table printed after Stage 3 completes
+- `paper-research`: Stage 2→3 `{arxiv_id → zotero_key}` mapping handoff documented
+- `paper-zotero`: Deduplication pre-check — `search_library` before each import to skip papers already in library
+- `paper-wiki`: `lang` parameter (`en`/`zh`/`zh-en`, default `en`) for output language
+- `paper-wiki`: PDF prerequisite check — skip wiki entry (with log) if no PDF or Zotero fulltext available
+
+---
+
 ## [1.0.3] — 2026-05-16
 
 ### Added

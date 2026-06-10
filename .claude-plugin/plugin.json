@@ -1,0 +1,21 @@
+{
+  "name": "paper-research-skill",
+  "version": "1.0.4",
+  "description": "Academic paper research pipeline: fetch → Zotero → Obsidian wiki",
+  "author": {
+    "name": "Geek96",
+    "url": "https://github.com/Geek96"
+  },
+  "license": "MIT",
+  "keywords": ["academic", "papers", "research", "zotero", "obsidian", "arxiv", "pubmed"],
+  "skills": [
+    "./skills/paper-research",
+    "./skills/paper-fetch",
+    "./skills/paper-zotero",
+    "./skills/paper-note",
+    "./skills/paper-moc",
+    "./skills/paper-wiki",
+    "./skills/paper-dataview",
+    "./skills/paper-version"
+  ]
+}

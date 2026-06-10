@@ -1,0 +1,7 @@
+.DS_Store
+*.pdf
+/tmp/
+node_modules/
+.env
+*.log
+temp/

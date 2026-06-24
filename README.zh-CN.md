@@ -323,11 +323,37 @@ npx -y @smithery/cli install @MarkusPfundstein/mcp-obsidian --client claude
 
 ## 👀 示例展示
 
-查看 [`demo/`](demo/) 目录中由 `paper-wiki` 生成的真实 wiki 页面：
+> [`demo/`](demo/) 目录中的所有文件都是 `paper-wiki` 的**真实输出**，不是手工制作的样例。
 
-- [`attention-is-all-you-need.md`](demo/methods/attention-is-all-you-need.md) — **Method** 模板：含 LaTeX 公式、逐步方法拆解、6 个关联概念词条
-- [`personalens.md`](demo/benchmarks/personalens.md) — **Benchmark** 模板：含评分量表（rubric）、baseline 对比表、使用指南
-- 3 个 **Concept 概念词条** — 展示直觉优先的写作风格
+### Method 示例 — [Attention Is All You Need](demo/methods/attention-is-all-you-need.md)
+
+开启 Transformer 时代的论文。展示了 Method 模板的核心能力：
+
+- 7 个 LaTeX 公式在 Obsidian 中渲染（`$$\text{Attention}(Q,K,V)$$`、`$$\text{MultiHead}$$`、FFN、Positional Encoding）
+- 逐步方法拆解（6 个子章节，含架构说明）
+- `> [!success]` 提示框标注核心创新点
+- `> [!warning]` 提示框中 9 个批判性问题
+- 6 个 `[[concept]]` 概念词条双向链接
+
+### Benchmark 示例 — [PersonaLens](demo/benchmarks/personalens.md)
+
+ACL 2025 Findings — 面向 20 个领域的个性化对话评测。展示了 Benchmark 模板的核心能力：
+
+- Quick Reference 速查表（10 个维度）
+- 评分量表（rubric）嵌入 `> [!example]` 提示框（Personalization 1–4 评分标准）
+- Baseline 对比表（5 个模型 × 4 个指标 × 单域/多域）
+- `> [!tip]` 使用指南，含快速试验建议
+- 数据构建流水线（7 步 curation 流程）
+
+### Concept 概念词条示例
+
+从 Method 论文中链接出来 — 展示 Karpathy 风格的直觉优先写法：
+
+| 词条 | 亮点 |
+|------|------|
+| [scaled-dot-product-attention.md](demo/concepts/scaled-dot-product-attention.md) | 核心公式 + "为什么要除以 √d_k" 的解释 |
+| [multi-head-attention.md](demo/concepts/multi-head-attention.md) | 矩阵维度标注（`$W_i^Q \in \mathbb{R}^{d \times d_k}$`） |
+| [positional-encoding.md](demo/concepts/positional-encoding.md) | sin/cos 公式 + RoPE / ALiBi 等变体对比 |
 
 ---
 

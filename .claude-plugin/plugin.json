@@ -12,9 +12,7 @@
     "./skills/paper-research",
     "./skills/paper-fetch",
     "./skills/paper-zotero",
-    "./skills/paper-moc",
     "./skills/paper-wiki",
-    "./skills/paper-dataview",
     "./skills/paper-version"
   ]
 }

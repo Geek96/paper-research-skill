@@ -62,17 +62,14 @@ Then in Claude Code:
 │  │  Download    │    │  Zotero      │                        │
 │  └─────────────┘    └──────┬───────┘                        │
 │                            │                                │
-│                   ┌────────┴────────┐                       │
-│                   ▼                 ▼                        │
-│           ┌────────────┐    ┌───────────┐                   │
-│           │ paper-wiki │    │ paper-moc │                    │
-│           │ Deep wiki  │    │ Topic map │                    │
-│           └─────┬──────┘    └───────────┘                   │
-│                 ▼                                            │
-│          ┌──────────────┐                                    │
-│          │paper-dataview│                                    │
-│          │  Frontmatter │                                    │
-│          └──────────────┘                                    │
+│                            ▼                                │
+│                    ┌────────────┐                            │
+│                    │ paper-wiki │                            │
+│                    │ Deep wiki  │                            │
+│                    │ + Concepts │                            │
+│                    │ + MOC      │                            │
+│                    │ + Dataview │                            │
+│                    └────────────┘                            │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -81,9 +78,7 @@ Then in Claude Code:
 | **`paper-research`** | Full pipeline orchestrator — start here | "Research papers on X" |
 | `paper-fetch` | Search & download PDFs | "Find papers on X" / provide DOIs |
 | `paper-zotero` | Import to Zotero with dedup | "Import these papers to Zotero" |
-| `paper-wiki` | Deep Karpathy-style wiki entry | "Add to my wiki" |
-| `paper-moc` | Topic Map of Content | "Create overview for topic X" |
-| `paper-dataview` | Inject Dataview frontmatter | "Add metadata to my notes" |
+| `paper-wiki` | Deep wiki + concepts + MOC + Dataview | "Add to my wiki" |
 | `paper-version` | Check installed version | `/version` |
 
 ---
@@ -364,8 +359,6 @@ paper-research-skill/
 │   ├── paper-fetch/SKILL.md       # Search & download
 │   ├── paper-zotero/SKILL.md      # Zotero import
 │   ├── paper-wiki/SKILL.md        # Deep wiki (templates + visual design system)
-│   ├── paper-moc/SKILL.md         # Map of Content
-│   ├── paper-dataview/SKILL.md    # Dataview metadata
 │   └── paper-version/SKILL.md     # Version check
 ├── demo/                          # Real wiki output examples
 │   ├── methods/                   #   Method paper demo

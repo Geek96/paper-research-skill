@@ -25,9 +25,7 @@ These are already configured — do not prompt user to install them:
 |-----------|---------|-------------|
 | `paper-fetch` | Search + select + download papers | ✓ |
 | `paper-zotero` | Import to Zotero library | ✓ |
-| `paper-moc` | Topic MOC index page | ✓ |
-| `paper-wiki` | Karpathy cumulative wiki | ✓ |
-| `paper-dataview` | YAML frontmatter for Dataview queries | ✓ |
+| `paper-wiki` | Karpathy cumulative wiki (includes MOC + Dataview frontmatter) | ✓ |
 
 ## Pipeline Flow
 
@@ -48,16 +46,12 @@ After Stage 2 completes, build a mapping table `{arxiv_id → zotero_key}` from 
 **Stage 3 — Obsidian Output**
 Ask the user two questions at once:
 
-1. "Which Obsidian output would you like? (choose one or more)"
-   - **A) Wiki** — Karpathy-style deep wiki: paper breakdown + detailed concept entries (`paper-wiki`). Reads the full PDF — not just the abstract.
-   - **B) Topic index** — MOC page aggregating papers (`paper-moc`)
-   - **C) Dataview metadata** — YAML frontmatter for queries (`paper-dataview`)
-   - **D) Skip Obsidian** — Zotero only
+1. "Write to Obsidian wiki?"
+   - **A) Yes** — Karpathy-style deep wiki: paper pages + concept entries + MOC + Dataview frontmatter (`paper-wiki`). Reads the full PDF.
+   - **B) Skip Obsidian** — Zotero only
 
 2. "Language? (A) English  (B) 中文  (C) 中英混合"
    Default: **English**.
-
-`paper-dataview` runs automatically alongside A or B unless user opts out.
 
 ## Quick Mode
 

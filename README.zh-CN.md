@@ -321,6 +321,16 @@ npx -y @smithery/cli install @MarkusPfundstein/mcp-obsidian --client claude
 
 ---
 
+## 👀 示例展示
+
+查看 [`demo/`](demo/) 目录中由 `paper-wiki` 生成的真实 wiki 页面：
+
+- [`attention-is-all-you-need.md`](demo/methods/attention-is-all-you-need.md) — **Method** 模板：含 LaTeX 公式、逐步方法拆解、6 个关联概念词条
+- [`personalens.md`](demo/benchmarks/personalens.md) — **Benchmark** 模板：含评分量表（rubric）、baseline 对比表、使用指南
+- 3 个 **Concept 概念词条** — 展示直觉优先的写作风格
+
+---
+
 ## 📁 项目结构
 
 ```
@@ -334,6 +344,10 @@ paper-research-skill/
 │   ├── paper-moc/SKILL.md         # Map of Content
 │   ├── paper-dataview/SKILL.md    # Dataview 元数据
 │   └── paper-version/SKILL.md     # 版本查询
+├── demo/                          # 真实 Wiki 输出示例
+│   ├── methods/                   #   Method 论文示例
+│   ├── benchmarks/                #   Benchmark 论文示例
+│   └── concepts/                  #   概念词条示例
 ├── .claude-plugin/plugin.json     # Claude Code 插件清单
 ├── CHANGELOG.md
 ├── CLAUDE.md                      # 开发规范

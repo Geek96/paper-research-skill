@@ -83,11 +83,14 @@ Normalize to hyphenated slug: `"Adaptive Conformal Inference"` → `adaptive-con
 
 ### Step 3 — Classify and write the paper wiki page
 
-Determine if the paper is a **benchmark** or a **method** paper:
+Determine the paper type and use the corresponding template:
+
 - **Benchmark**: primary contribution is a dataset, evaluation suite, or leaderboard. The paper defines tasks, collects/curates data, and tests existing models. Place in `Wiki/Papers/benchmarks/`.
 - **Method**: primary contribution is a novel algorithm, architecture, or system. Place in `Wiki/Papers/methods/`.
+- **Survey**: primary contribution is organizing, categorizing, and synthesizing a research field. The paper reviews many existing works and proposes a taxonomy or framework for understanding the landscape. Place in `Wiki/Papers/surveys/`.
+- **Technical Report**: primary contribution is a foundation model, infrastructure, or system design. Typically from industry labs — describes architecture, training, and capabilities without formal novelty claim. Includes model cards, system papers, and seminal architecture papers. Place in `Wiki/Papers/technical-reports/`.
 
-Use the **Benchmark Paper Page Template** or the **Method Paper Page Template** accordingly.
+Use the corresponding template below.
 
 ### Step 4 — Write or augment concept entries
 
@@ -385,6 +388,229 @@ When would you NOT use this approach?}}
 
 ---
 
+## Survey Paper Page Template
+
+File: `Wiki/Papers/surveys/{{paper-slug}}.md`
+
+```markdown
+# {{Full Paper Title}}
+
+> **TL;DR**: {{One sharp sentence — what field this surveys, and the key insight or gap it identifies.}}
+
+**Authors**: {{authors}} | **Year**: {{year}} | **arXiv**: [{{arxiv_id}}](https://arxiv.org/abs/{{arxiv_id}}) | **Zotero**: [Open](zotero://select/items/{{zotero_key}})
+**Venue**: {{venue}}
+
+---
+
+## Quick Reference
+
+| Dimension | Detail |
+|-----------|--------|
+| **Field** | {{what research area this surveys}} |
+| **Scope** | {{time range, # papers reviewed, inclusion/exclusion criteria}} |
+| **Taxonomy** | {{how the paper organizes the field — axes/dimensions of classification}} |
+| **Key Gap Identified** | {{the most important open problem or blind spot the survey highlights}} |
+| **# Papers Reviewed** | {{approximate count}} |
+
+---
+
+## Why This Survey Exists
+
+{{2–3 paragraphs. What makes this field hard to navigate? Why is a survey needed now?
+What prior surveys exist and what do they miss?}}
+
+## Prerequisites
+
+- [[concept-A]] — {{one-line}}
+- [[concept-B]] — {{one-line}}
+
+---
+
+## Taxonomy / Organizational Framework
+
+{{The core intellectual contribution of a survey — how it carves the field into categories.
+Describe each axis of the taxonomy with definitions and representative papers.
+
+Example format:
+### Axis 1: {{Name}}
+- **Category A**: {{definition}}. Representative: [[paper-1]], [[paper-2]]
+- **Category B**: {{definition}}. Representative: [[paper-3]]
+
+### Axis 2: {{Name}}
+...
+
+If the survey proposes a multi-dimensional framework (e.g. 2×3 grid), describe both axes and the key cells.
+All category names and axis labels must be annotated with definitions.}}
+
+---
+
+## Coverage Analysis
+
+{{What's well-covered vs. under-explored in the field?
+- Which problem formulations dominate? Which are neglected?
+- Which methods/approaches are over-represented?
+- What datasets or domains are missing?
+- Any methodological blind spots (e.g. everyone uses the same evaluation)?}}
+
+---
+
+## Key Findings / Trends
+
+{{3–5 bullet points on the survey's main conclusions about the state of the field:
+- **Finding**: {{statement}}. Evidence: {{which reviewed papers support this}}
+- Focus on findings that change how you'd approach work in this area}}
+
+---
+
+## Open Problems
+
+{{The survey's identified gaps and open challenges, ranked by importance.
+For each:
+- What's missing?
+- Why is it hard?
+- What would a solution look like?}}
+
+---
+
+## What I'd Question
+
+{{Your critical take:
+- Is the taxonomy actually useful, or does it impose artificial categories?
+- What papers or approaches did the survey miss?
+- Are the "open problems" genuinely open, or already being addressed?
+- Bias in coverage (e.g. over-represents certain labs/methods)?}}
+
+---
+
+## Key Concepts from This Paper
+
+- [[concept-a]] — {{one-line}}
+- [[concept-b]] — {{one-line}}
+
+---
+
+## Related Papers
+
+- [[related-paper-slug]] — {{why it's related}}
+```
+
+---
+
+## Technical Report Paper Page Template
+
+File: `Wiki/Papers/technical-reports/{{paper-slug}}.md`
+
+```markdown
+# {{Full Paper Title}}
+
+> **TL;DR**: {{One sharp sentence — what this system/model is and its core design bet.}}
+
+**Authors**: {{authors}} | **Year**: {{year}} | **arXiv**: [{{arxiv_id}}](https://arxiv.org/abs/{{arxiv_id}}) | **Zotero**: [Open](zotero://select/items/{{zotero_key}})
+**Venue**: {{venue}}
+
+---
+
+## Quick Reference
+
+| Dimension | Detail |
+|-----------|--------|
+| **Type** | {{foundation model / architecture / system / infrastructure}} |
+| **Modality** | {{text / vision / multimodal / etc.}} |
+| **Scale** | {{parameter count, training data size, compute budget if known}} |
+| **Core Design Bet** | {{the one architectural or design decision that defines this work}} |
+| **Downstream Impact** | {{what this enabled — list major follow-up works or applications}} |
+| **Open Source** | {{Yes/No; link if available}} |
+
+---
+
+## Why This Paper Matters
+
+{{2–3 paragraphs. Not "why this paper exists" (it exists because a lab built something) but why it matters:
+- What did the field look like before this?
+- What shifted after? What became possible?
+- Is its importance from the architecture, the scale, the training recipe, or something else?
+Karpathy voice: be honest about what's genuinely novel vs. well-executed engineering.}}
+
+## Prerequisites
+
+- [[concept-A]] — {{one-line}}
+- [[concept-B]] — {{one-line}}
+
+---
+
+## Architecture
+
+{{The core technical content. Walk through the architecture or system design:
+
+### High-Level Design
+{{Block diagram description — what are the major components and how do they connect?}}
+
+### Key Components
+{{For each non-trivial component:
+- What it does (one sentence)
+- How it works (mechanistic)
+- Key equations with every term annotated
+- Why this design choice over alternatives}}
+
+### Training Recipe
+{{If applicable:
+- Training data: sources, scale, curation
+- Training procedure: stages, hyperparameters, curriculum
+- Key tricks that matter for reproduction}}
+
+### Design Decisions
+
+{{The most interesting part — WHY choices were made:
+- "They chose X over Y because Z"
+- "This is unusual because most prior work does W instead"
+- Trade-offs: what did this design choice sacrifice?}}
+```
+
+---
+
+## Scaling & Performance
+
+{{Results framed as "what can this system do":
+- Key benchmarks and scores
+- Comparison with contemporaries (not just prior work — what shipped around the same time?)
+- Scaling laws or emergent capabilities if discussed}}
+
+---
+
+## Legacy & Influence
+
+{{What happened after this paper:
+- What follow-up works built directly on this?
+- Which design decisions became standard? Which were abandoned?
+- Did the paper's own framing hold up, or did the field reinterpret its contribution?
+This section is unique to technical reports — benchmark/method papers don't need it because they're too recent.}}
+
+---
+
+## What I'd Question
+
+{{Critical assessment:
+- What limitations are underplayed in the paper?
+- What would break at larger/smaller scale?
+- Which claims haven't been independently verified?
+- What's missing from the evaluation?}}
+
+---
+
+## Key Concepts from This Paper
+
+- [[concept-a]] — {{one-line}}
+- [[concept-b]] — {{one-line}}
+
+---
+
+## Related Papers
+
+- [[related-paper-slug]] — {{why it's related: predecessor / successor / alternative design}}
+```
+
+---
+
 ## Concept Entry Template
 
 File: `Wiki/Concepts/{{concept-slug}}.md`
@@ -514,3 +740,17 @@ Concept entries updated (1):
 - **Granularity mismatch**: Don't create concept entries for things like "Adam optimizer" unless the paper makes a novel contribution to it. Prefer meaningful depth over breadth.
 - **Duplicate slugs**: "self-attention" and "self attention" are the same. Always normalize.
 - **Augmenting blindly**: When updating an existing concept entry, re-read it first. Don't add contradictory information without flagging the tension explicitly.
+
+---
+
+## Post-Modification GitHub Sync
+
+After every wiki modification session (adding/updating paper pages, concept entries, or skill changes), ask the user:
+
+> "Wiki 已更新。是否需要 push 到 GitHub？"
+
+If yes:
+1. Stage and commit the changed files in the relevant repo (e.g. `Geek96/ICLR2027` for personalization wiki, `Geek96/paper-research-skill` for skill updates)
+2. Push to remote
+
+This ensures the GitHub repos stay in sync with local changes.

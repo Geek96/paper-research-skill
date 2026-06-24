@@ -12,6 +12,10 @@
   <code>search / download → Zotero → Obsidian wiki</code>
 </p>
 
+<p align="center">
+  <strong>English</strong> | <a href="README.zh-CN.md">简体中文</a>
+</p>
+
 ---
 
 ## ✨ Features

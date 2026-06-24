@@ -62,19 +62,17 @@ Then in Claude Code:
 │  │  Download    │    │  Zotero      │                        │
 │  └─────────────┘    └──────┬───────┘                        │
 │                            │                                │
-│              ┌─────────────┼─────────────┐                  │
-│              ▼             ▼             ▼                   │
-│     ┌────────────┐ ┌────────────┐ ┌───────────┐            │
-│     │ paper-note │ │ paper-wiki │ │ paper-moc │            │
-│     │ Quick note │ │ Deep wiki  │ │ Topic map │            │
-│     └────────────┘ └────────────┘ └───────────┘            │
-│              │             │             │                   │
-│              └─────────────┼─────────────┘                  │
-│                            ▼                                │
-│                   ┌──────────────┐                           │
-│                   │paper-dataview│                           │
-│                   │  Frontmatter │                           │
-│                   └──────────────┘                           │
+│                   ┌────────┴────────┐                       │
+│                   ▼                 ▼                        │
+│           ┌────────────┐    ┌───────────┐                   │
+│           │ paper-wiki │    │ paper-moc │                    │
+│           │ Deep wiki  │    │ Topic map │                    │
+│           └─────┬──────┘    └───────────┘                   │
+│                 ▼                                            │
+│          ┌──────────────┐                                    │
+│          │paper-dataview│                                    │
+│          │  Frontmatter │                                    │
+│          └──────────────┘                                    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -83,7 +81,6 @@ Then in Claude Code:
 | **`paper-research`** | Full pipeline orchestrator — start here | "Research papers on X" |
 | `paper-fetch` | Search & download PDFs | "Find papers on X" / provide DOIs |
 | `paper-zotero` | Import to Zotero with dedup | "Import these papers to Zotero" |
-| `paper-note` | Quick Obsidian note | "Summarize this paper" |
 | `paper-wiki` | Deep Karpathy-style wiki entry | "Add to my wiki" |
 | `paper-moc` | Topic Map of Content | "Create overview for topic X" |
 | `paper-dataview` | Inject Dataview frontmatter | "Add metadata to my notes" |
@@ -366,7 +363,6 @@ paper-research-skill/
 │   ├── paper-research/SKILL.md    # Pipeline orchestrator
 │   ├── paper-fetch/SKILL.md       # Search & download
 │   ├── paper-zotero/SKILL.md      # Zotero import
-│   ├── paper-note/SKILL.md        # Quick notes
 │   ├── paper-wiki/SKILL.md        # Deep wiki (templates + visual design system)
 │   ├── paper-moc/SKILL.md         # Map of Content
 │   ├── paper-dataview/SKILL.md    # Dataview metadata

@@ -61,19 +61,17 @@ npx skills add Geek96/paper-research-skill
 │  │  搜索 & 下载  │    │  导入 Zotero  │                        │
 │  └─────────────┘    └──────┬───────┘                        │
 │                            │                                │
-│              ┌─────────────┼─────────────┐                  │
-│              ▼             ▼             ▼                   │
-│     ┌────────────┐ ┌────────────┐ ┌───────────┐            │
-│     │ paper-note │ │ paper-wiki │ │ paper-moc │            │
-│     │  快速笔记   │ │  深度 Wiki  │ │  主题地图  │            │
-│     └────────────┘ └────────────┘ └───────────┘            │
-│              │             │             │                   │
-│              └─────────────┼─────────────┘                  │
-│                            ▼                                │
-│                   ┌──────────────┐                           │
-│                   │paper-dataview│                           │
-│                   │  元数据注入   │                           │
-│                   └──────────────┘                           │
+│                   ┌────────┴────────┐                       │
+│                   ▼                 ▼                        │
+│           ┌────────────┐    ┌───────────┐                   │
+│           │ paper-wiki │    │ paper-moc │                    │
+│           │  深度 Wiki  │    │  主题地图  │                    │
+│           └─────┬──────┘    └───────────┘                   │
+│                 ▼                                            │
+│          ┌──────────────┐                                    │
+│          │paper-dataview│                                    │
+│          │  元数据注入   │                                    │
+│          └──────────────┘                                    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -82,7 +80,6 @@ npx skills add Geek96/paper-research-skill
 | **`paper-research`** | 全流程编排器 — 从这里开始 | "帮我调研 X 方向的论文" |
 | `paper-fetch` | 搜索论文 & 下载 PDF | "搜一下 X 相关的论文" / 直接给 DOI |
 | `paper-zotero` | 导入 Zotero（自动去重） | "把这些论文导入 Zotero" |
-| `paper-note` | 生成 Obsidian 快速笔记 | "帮我总结这篇论文" |
 | `paper-wiki` | 生成 Karpathy 风格深度 Wiki | "加到我的 wiki 里" |
 | `paper-moc` | 生成主题 MOC（Map of Content） | "给 X 主题做一个总览" |
 | `paper-dataview` | 注入 Dataview frontmatter 元数据 | "给我的笔记加上 metadata" |
@@ -365,7 +362,6 @@ paper-research-skill/
 │   ├── paper-research/SKILL.md    # 全流程编排器
 │   ├── paper-fetch/SKILL.md       # 搜索与下载
 │   ├── paper-zotero/SKILL.md      # Zotero 导入
-│   ├── paper-note/SKILL.md        # 快速笔记
 │   ├── paper-wiki/SKILL.md        # 深度 Wiki（模板 + 视觉设计系统）
 │   ├── paper-moc/SKILL.md         # Map of Content
 │   ├── paper-dataview/SKILL.md    # Dataview 元数据

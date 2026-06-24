@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "skills": {
+    "paper-dataview": {
+      "source": "Geek96/paper-research-skill",
+      "sourceType": "github",
+      "skillPath": "skills/paper-dataview/SKILL.md",
+      "computedHash": "3fd42309ef38af3346b0fca749c53f6fa986a1226c5c33f2c4e387949d128d93"
+    },
+    "paper-fetch": {
+      "source": "Geek96/paper-research-skill",
+      "sourceType": "github",
+      "skillPath": "skills/paper-fetch/SKILL.md",
+      "computedHash": "fe53bac1dc6e0a7069b04b501ac2d8430d341ed7e314a3af6d702cc1e96b96cf"
+    },
+    "paper-moc": {
+      "source": "Geek96/paper-research-skill",
+      "sourceType": "github",
+      "skillPath": "skills/paper-moc/SKILL.md",
+      "computedHash": "600a001fe81985d030fad10d6572bf1905b06af210363e71fe3a028456f6f880"
+    },
+    "paper-note": {
+      "source": "Geek96/paper-research-skill",
+      "sourceType": "github",
+      "skillPath": "skills/paper-note/SKILL.md",
+      "computedHash": "b56ead5a42e1f7df459d6a8d73fe66867e529e964c80a3bab9810a08ff62a718"
+    },
+    "paper-research": {
+      "source": "Geek96/paper-research-skill",
+      "sourceType": "github",
+      "skillPath": "skills/paper-research/SKILL.md",
+      "computedHash": "b88042628ae5d4fb5ff992965b0594ed352f854ab7b57c6f1b50bbfcffa355b2"
+    },
+    "paper-wiki": {
+      "source": "Geek96/paper-research-skill",
+      "sourceType": "github",
+      "skillPath": "skills/paper-wiki/SKILL.md",
+      "computedHash": "50c5ebbd6fe89646cb75ba673f6f07d02f74e8da56cf9956927a4d6cf5a3bc62"
+    },
+    "paper-zotero": {
+      "source": "Geek96/paper-research-skill",
+      "sourceType": "github",
+      "skillPath": "skills/paper-zotero/SKILL.md",
+      "computedHash": "5f635c1c607754686c32372d02e63269634b9a8d88975c0d98d0fb28137e99f5"
+    }
+  }
+}

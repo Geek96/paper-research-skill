@@ -25,7 +25,6 @@ These are already configured — do not prompt user to install them:
 |-----------|---------|-------------|
 | `paper-fetch` | Search + select + download papers | ✓ |
 | `paper-zotero` | Import to Zotero library | ✓ |
-| `paper-note` | Structured Obsidian note per paper | ✓ |
 | `paper-moc` | Topic MOC index page | ✓ |
 | `paper-wiki` | Karpathy cumulative wiki | ✓ |
 | `paper-dataview` | YAML frontmatter for Dataview queries | ✓ |
@@ -50,23 +49,22 @@ After Stage 2 completes, build a mapping table `{arxiv_id → zotero_key}` from 
 Ask the user two questions at once:
 
 1. "Which Obsidian output would you like? (choose one or more)"
-   - **A) Single notes** — one structured note per paper (`paper-note`)
+   - **A) Wiki** — Karpathy-style deep wiki: paper breakdown + detailed concept entries (`paper-wiki`). Reads the full PDF — not just the abstract.
    - **B) Topic index** — MOC page aggregating papers (`paper-moc`)
-   - **C) Wiki** — Karpathy-style deep wiki: chapter-by-chapter paper breakdown + detailed concept entries (`paper-wiki`). Reads the full PDF — not just the abstract. Each paper page 600–1200 words; each concept entry 400–800 words.
-   - **D) Dataview metadata** — YAML frontmatter for queries (`paper-dataview`)
-   - **E) Skip Obsidian** — Zotero only
+   - **C) Dataview metadata** — YAML frontmatter for queries (`paper-dataview`)
+   - **D) Skip Obsidian** — Zotero only
 
 2. "Language? (A) English  (B) 中文  (C) 中英混合"
    Default: **English**.
 
-`paper-dataview` runs automatically alongside A, B, or C unless user opts out.
+`paper-dataview` runs automatically alongside A or B unless user opts out.
 
 ## Quick Mode
 
 - **DOI list provided** → skip Stage 1, go straight to Stage 2
 - **Document/batch provided** (`.docx`, spreadsheet, or pre-selected list with abstracts) → parse all arXiv IDs/DOIs from the document, skip Stage 1, go straight to Stage 2. If extra arXiv URLs are provided alongside the document, include them in the same batch.
 - **PDF only, no DOI** → skip Stage 1 + Stage 2 Zotero metadata step, use `import_pdf_to_zotero` directly, then go to Stage 3
-- **Summarize only** → skip Stage 1 + Stage 2, run `paper-note` directly on given PDF
+- **Summarize only** → skip Stage 1 + Stage 2, run `paper-wiki` directly on given PDF
 
 ## Example Interactions
 
@@ -77,7 +75,7 @@ Ask the user two questions at once:
 → Skip fetch → import to Zotero → run paper-wiki
 
 > "Summarize this PDF and add it to my Obsidian"
-→ Skip fetch + Zotero → run paper-note directly
+→ Skip fetch + Zotero → run paper-wiki directly
 
 ## PDF Parallel Download Rule
 

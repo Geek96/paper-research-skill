@@ -18,6 +18,70 @@ Running this on 5 papers produces a small wiki. Running on 50 produces a rich, i
 
 ---
 
+## Visual Design System
+
+All wiki pages use a consistent visual language optimized for Obsidian reading experience:
+
+### Frontmatter (Dataview Integration)
+
+Every paper and concept page includes structured YAML frontmatter for Dataview queries. This enables automatic indexing, filtering, and dashboard generation.
+
+### Callout Types
+
+Use Obsidian callouts to highlight key sections:
+
+| Callout | Usage | Example |
+|---------|-------|---------|
+| `> [!abstract]` | TL;DR / one-line summary | Paper and concept summaries |
+| `> [!success]` | Key Findings / positive results | Findings with evidence |
+| `> [!warning]` | Critical questions / limitations | "What I'd Question" sections |
+| `> [!tip]` | Practical advice / adoption | Adoption Guide, "When to Use" |
+| `> [!info]` | Prerequisites / context | Background knowledge needed |
+| `> [!example]` | Concrete examples / case studies | Task examples, data instances |
+| `> [!danger]` | Safety concerns / red flags | Medical safety, data leakage risks |
+
+### Emoji Section Headers
+
+Use emoji sparingly but consistently as visual anchors:
+
+| Emoji | Section |
+|-------|---------|
+| 🎯 | Why This Exists / Motivation |
+| 📋 | Quick Reference / Overview |
+| 🔬 | Method / Architecture / Task Definitions |
+| 📊 | Results / Baseline / Performance |
+| 💡 | Key Findings / Insights |
+| ⚠️ | What I'd Question / Limitations |
+| 🧩 | Key Concepts |
+| 🔗 | Related Papers |
+| 🛠️ | Adoption Guide / Practical |
+| 📦 | Dataset Construction |
+| 📐 | Evaluation Framework |
+| 🗺️ | Taxonomy / Framework (surveys) |
+| 🏗️ | Architecture (technical reports) |
+
+### Tag Taxonomy
+
+Frontmatter `tags` use a hierarchical system:
+
+```yaml
+tags:
+  - type/benchmark          # type/method, type/survey, type/technical-report, type/concept
+  - domain/personalization  # domain/memory, domain/recommendation, domain/education, domain/medical
+  - modality/text           # modality/multimodal, modality/vision
+  - venue/neurips-2025      # venue/preprint, venue/acl-2025, venue/iclr-2026
+  - status/complete         # status/reading, status/to-read
+```
+
+### Reading Status
+
+Track reading progress in frontmatter:
+- `status: to-read` — queued
+- `status: reading` — in progress
+- `status: complete` — wiki page written
+
+---
+
 ## Required MCP
 
 `ajtruex/mcp-obsidian-streamable-http` — already installed.
@@ -104,6 +168,16 @@ For each concept from Step 2:
 - In the paper page, add `[[concept-slug]]` wiki links on first mention of each concept
 - In each concept entry, add the paper to the `## Papers` backlink section
 
+### Step 6 — Update MOC (Map of Content)
+
+After creating/updating paper and concept pages, update the MOC index:
+
+1. Check if `Wiki/MOC.md` exists
+2. If **no** → create it using the **MOC Template** below
+3. If **yes** → add new entries to the appropriate sections
+
+The MOC serves as the central navigation hub for the entire wiki.
+
 ---
 
 ## Benchmark Paper Page Template
@@ -111,16 +185,35 @@ For each concept from Step 2:
 File: `Wiki/Papers/benchmarks/{{paper-slug}}.md`
 
 ```markdown
+---
+title: "{{Full Paper Title}}"
+aliases: [{{short-name}}]
+type: benchmark
+year: {{year}}
+venue: "{{venue}}"
+arxiv: "{{arxiv_id}}"
+domains: [{{domain1}}, {{domain2}}]
+modality: {{text-only / multimodal}}
+status: complete
+created: {{YYYY-MM-DD}}
+tags:
+  - type/benchmark
+  - domain/{{primary-domain}}
+  - venue/{{venue-slug}}
+  - status/complete
+---
+
 # {{Full Paper Title}}
 
-> **TL;DR**: {{One sharp sentence — what this benchmark measures and the headline finding.}}
+> [!abstract] TL;DR
+> {{One sharp sentence — what this benchmark measures and the headline finding.}}
 
 **Authors**: {{authors}} | **Year**: {{year}} | **arXiv**: [{{arxiv_id}}](https://arxiv.org/abs/{{arxiv_id}}) | **Zotero**: [Open](zotero://select/items/{{zotero_key}})
 **Venue**: {{venue — e.g. "NeurIPS 2025", "ACL 2025 Findings", "Workshop @ ICLR 2026 (Lifelong Agent)", or "Preprint"}}
 
 ---
 
-## Quick Reference
+## 📋 Quick Reference
 
 | Dimension | Detail |
 |-----------|--------|
@@ -137,21 +230,20 @@ File: `Wiki/Papers/benchmarks/{{paper-slug}}.md`
 
 ---
 
-## Why This Benchmark Exists
+## 🎯 Why This Benchmark Exists
 
 {{2–3 paragraphs on the gap this benchmark fills.
 What was impossible to measure before? What existing benchmarks miss?
 Why does this specific evaluation matter for the field?
 Karpathy voice: be direct about what was broken in prior evaluation.}}
 
-## Prerequisites
-
-- [[concept-A]] — {{one-line explanation of why it's needed here}}
-- [[concept-B]] — {{one-line explanation}}
+> [!info] Prerequisites
+> - [[concept-A]] — {{one-line explanation of why it's needed here}}
+> - [[concept-B]] — {{one-line explanation}}
 
 ---
 
-## Task Definitions
+## 🔬 Task Definitions
 
 {{For each task/subtask the benchmark defines:}}
 
@@ -160,38 +252,39 @@ Karpathy voice: be direct about what was broken in prior evaluation.}}
 - **Input**: {{what the model receives}}
 - **Output**: {{what the model must produce}}
 - **Evaluation**: {{how correctness is judged — metric + method (automatic/human/LLM-judge)}}
-- **Example**: {{one concrete instance to make the task tangible}}
+
+> [!example] Example
+> {{one concrete instance to make the task tangible}}
 
 {{Repeat for each task. If there are many subtasks, group logically.}}
 
 ---
 
-## Dataset Construction
+## 📦 Dataset Construction
 
 ### Data Composition
 
 {{Describe the concrete makeup of the dataset:
 - What does each data instance look like? (a user profile + query + ground truth? a conversation thread? a sequence of interactions?)
 - What fields/columns/attributes does each instance contain?
-- If multimodal: what modalities are present per instance, and how do they interact? (e.g. "each item has a product image + text description + price, but user queries are text-only")
-- If text-only: what is the text structure? (natural language queries? structured logs? JSON?)
+- If multimodal: what modalities are present per instance, and how do they interact?
+- If text-only: what is the text structure?
 - Distribution: how balanced across domains/tasks/difficulty levels? Any notable skew?}}
 
 ### Curation Pipeline
 
 {{Step-by-step how the data was created. Be specific:
-1. **Raw source**: where did the raw data come from? (real platform logs, crowdsourcing, LLM-generated, manual expert creation, existing public datasets)
-2. **Filtering**: what was removed and why? (spam, duplicates, low-quality, too-easy examples)
-3. **Annotation**: who labeled what? (expert annotators, crowdworkers, LLM-as-annotator, rule-based) What was the annotation schema?
-4. **Quality control**: inter-annotator agreement? validation rounds? adversarial filtering?
+1. **Raw source**: where did the raw data come from?
+2. **Filtering**: what was removed and why?
+3. **Annotation**: who labeled what? What was the annotation schema?
+4. **Quality control**: inter-annotator agreement? validation rounds?
 5. **Splits**: how are train/val/test divided? Is there data leakage risk?
 
-If the paper uses multiple data sources or a multi-stage pipeline, describe each stage separately.
 If synthetic: what LLM generated it? What prompts? What post-filtering was applied?}}
 
 ---
 
-## Evaluation Framework
+## 📐 Evaluation Framework
 
 {{Metrics used and why they were chosen. For each metric:
 - Name and formula — **if the paper defines a metric with an explicit formula, always include it** (LaTeX or plain-text math). Unpack every term in the formula so the reader can compute it from scratch. Standard metrics (Accuracy, F1, BLEU, ROUGE) don't need formulas, but any custom or modified metric does.
@@ -209,7 +302,7 @@ If the benchmark uses a non-trivial data structure (triplets, tuples, multi-fiel
 
 ---
 
-## Baseline Results
+## 📊 Baseline Results
 
 {{Model comparison table — the core deliverable of a benchmark paper.}}
 
@@ -226,44 +319,45 @@ If the benchmark uses a non-trivial data structure (triplets, tuples, multi-fiel
 
 ---
 
-## Key Findings
+## 💡 Key Findings
 
-{{The benchmark's main takeaways about model capabilities. 3–5 bullet points, each with evidence:
-- "Finding: X. Evidence: Y." format
-- Focus on findings that generalize beyond this specific benchmark
-- Flag any findings that contradict conventional wisdom}}
-
----
-
-## Adoption Guide
-
-{{Practical info for researchers who want to use this benchmark:
-- How to access data and code
-- Compute/cost requirements to run a full evaluation
-- Common pitfalls when running experiments
-- Suggested subset for quick pilot experiments
-- What to pair it with (complementary benchmarks)}}
+> [!success] Main Takeaways
+> {{The benchmark's main takeaways about model capabilities. 3–5 bullet points, each with evidence:
+> - **Finding**: X. **Evidence**: Y.
+> - Focus on findings that generalize beyond this specific benchmark
+> - Flag any findings that contradict conventional wisdom}}
 
 ---
 
-## What I'd Question
+## 🛠️ Adoption Guide
 
-{{3–5 bullet points on:
-- Validity concerns (does the benchmark actually measure what it claims?)
-- Missing scenarios or model types not tested
-- Potential for gaming or shortcut solutions
-- How this benchmark might age}}
+> [!tip] Getting Started
+> - **Data/Code**: {{how to access}}
+> - **Compute**: {{cost requirements}}
+> - **Quick Pilot**: {{suggested subset for fast experiments}}
+> - **Pair With**: {{complementary benchmarks}}
 
 ---
 
-## Key Concepts from This Paper
+## ⚠️ What I'd Question
+
+> [!warning] Critical Assessment
+> {{3–5 bullet points on:
+> - Validity concerns (does the benchmark actually measure what it claims?)
+> - Missing scenarios or model types not tested
+> - Potential for gaming or shortcut solutions
+> - How this benchmark might age}}
+
+---
+
+## 🧩 Key Concepts
 
 - [[concept-a]] — {{one-line}}
 - [[concept-b]] — {{one-line}}
 
 ---
 
-## Related Papers
+## 🔗 Related Papers
 
 - [[related-paper-slug]] — {{why it's related: complementary benchmark / method tested here / dataset overlap}}
 ```
@@ -275,34 +369,50 @@ If the benchmark uses a non-trivial data structure (triplets, tuples, multi-fiel
 File: `Wiki/Papers/methods/{{paper-slug}}.md`
 
 ```markdown
+---
+title: "{{Full Paper Title}}"
+aliases: [{{short-name}}]
+type: method
+year: {{year}}
+venue: "{{venue}}"
+arxiv: "{{arxiv_id}}"
+domains: [{{domain1}}, {{domain2}}]
+status: complete
+created: {{YYYY-MM-DD}}
+tags:
+  - type/method
+  - domain/{{primary-domain}}
+  - venue/{{venue-slug}}
+  - status/complete
+---
+
 # {{Full Paper Title}}
 
-> **TL;DR**: {{One sharp sentence — the core claim, not a description of structure.}}
+> [!abstract] TL;DR
+> {{One sharp sentence — the core claim, not a description of structure.}}
 
 **Authors**: {{authors}} | **Year**: {{year}} | **arXiv**: [{{arxiv_id}}](https://arxiv.org/abs/{{arxiv_id}}) | **Zotero**: [Open](zotero://select/items/{{zotero_key}})
-**Venue**: {{venue — e.g. "ICML 2025", "Workshop @ NeurIPS 2025 (MemAgent)", or "Preprint"}}
+**Venue**: {{venue}}
 
 ---
 
-## Why This Paper Exists
+## 🎯 Why This Paper Exists
 
 {{2–3 paragraphs on the problem this paper solves. Write in plain language.
 What was broken or missing before? What makes this hard?
 What would happen if you didn't have this paper's contribution?
 Karpathy voice: be direct, use concrete examples, avoid hedging.}}
 
-## Prerequisites
-
-To understand this paper, you need:
-- [[concept-A]] — {{one-line explanation of why it's needed here}}
-- [[concept-B]] — {{one-line explanation}}
-- [[concept-C]] — {{one-line explanation}}
-
-If these are unfamiliar, read the concept entries first.
+> [!info] Prerequisites
+> - [[concept-A]] — {{one-line explanation of why it's needed here}}
+> - [[concept-B]] — {{one-line explanation}}
+> - [[concept-C]] — {{one-line explanation}}
+>
+> If these are unfamiliar, read the concept entries first.
 
 ---
 
-## Chapter-by-Chapter Breakdown
+## 🔬 Chapter-by-Chapter Breakdown
 
 ### 1. Introduction / Motivation
 
@@ -335,7 +445,7 @@ Example format:
 
 Repeat for each component. Include ASCII diagrams if they aid clarity.}}
 
-### 4. The Key Innovation
+### 4. 💡 The Key Innovation
 
 {{In 1–2 paragraphs: what is genuinely new in this paper?
 Be specific and critical. Examples:
@@ -343,7 +453,7 @@ Be specific and critical. Examples:
 - "This looks like technique A from [prior paper], but differs in that..."
 Karpathy style: distinguish between what's actually new and what's packaging.}}
 
-### 5. Experiments
+### 5. 📊 Experiments
 
 {{What did they test? On what data? Against what baselines?
 
@@ -357,13 +467,14 @@ They did not test on out-of-distribution data, which would matter most for deplo
 
 ### 6. What I'd Try (or Question)
 
-{{Karpathy-style actionable section. 3–5 bullet points on:
-- What experiment would you run next?
-- What assumption seems shakiest?
-- What would you change in the method?
-- What does this suggest for your own work?
-
-Be specific. "I would try X because Y" not "future work should explore X."}}
+> [!warning] Critical Assessment
+> {{3–5 bullet points on:
+> - What experiment would you run next?
+> - What assumption seems shakiest?
+> - What would you change in the method?
+> - What does this suggest for your own work?
+>
+> Be specific. "I would try X because Y" not "future work should explore X."}}
 
 ### 7. Limitations (Honest Version)
 
@@ -373,15 +484,14 @@ When would you NOT use this approach?}}
 
 ---
 
-## Key Concepts from This Paper
+## 🧩 Key Concepts
 
-{{Bulleted list of wiki links to concept entries created/updated for this paper:}}
-- [[concept-a]] — {{one-line}]
+- [[concept-a]] — {{one-line}}
 - [[concept-b]] — {{one-line}}
 
 ---
 
-## Related Papers
+## 🔗 Related Papers
 
 - [[related-paper-slug]] — {{why it's related: shares method / problem / dataset}}
 ```
@@ -393,16 +503,35 @@ When would you NOT use this approach?}}
 File: `Wiki/Papers/surveys/{{paper-slug}}.md`
 
 ```markdown
+---
+title: "{{Full Paper Title}}"
+aliases: [{{short-name}}]
+type: survey
+year: {{year}}
+venue: "{{venue}}"
+arxiv: "{{arxiv_id}}"
+field: "{{research field}}"
+papers_reviewed: {{approximate count}}
+status: complete
+created: {{YYYY-MM-DD}}
+tags:
+  - type/survey
+  - domain/{{primary-domain}}
+  - venue/{{venue-slug}}
+  - status/complete
+---
+
 # {{Full Paper Title}}
 
-> **TL;DR**: {{One sharp sentence — what field this surveys, and the key insight or gap it identifies.}}
+> [!abstract] TL;DR
+> {{One sharp sentence — what field this surveys, and the key insight or gap it identifies.}}
 
 **Authors**: {{authors}} | **Year**: {{year}} | **arXiv**: [{{arxiv_id}}](https://arxiv.org/abs/{{arxiv_id}}) | **Zotero**: [Open](zotero://select/items/{{zotero_key}})
 **Venue**: {{venue}}
 
 ---
 
-## Quick Reference
+## 📋 Quick Reference
 
 | Dimension | Detail |
 |-----------|--------|
@@ -414,19 +543,18 @@ File: `Wiki/Papers/surveys/{{paper-slug}}.md`
 
 ---
 
-## Why This Survey Exists
+## 🎯 Why This Survey Exists
 
 {{2–3 paragraphs. What makes this field hard to navigate? Why is a survey needed now?
 What prior surveys exist and what do they miss?}}
 
-## Prerequisites
-
-- [[concept-A]] — {{one-line}}
-- [[concept-B]] — {{one-line}}
+> [!info] Prerequisites
+> - [[concept-A]] — {{one-line}}
+> - [[concept-B]] — {{one-line}}
 
 ---
 
-## Taxonomy / Organizational Framework
+## 🗺️ Taxonomy / Organizational Framework
 
 {{The core intellectual contribution of a survey — how it carves the field into categories.
 Describe each axis of the taxonomy with definitions and representative papers.
@@ -444,7 +572,7 @@ All category names and axis labels must be annotated with definitions.}}
 
 ---
 
-## Coverage Analysis
+## 📊 Coverage Analysis
 
 {{What's well-covered vs. under-explored in the field?
 - Which problem formulations dominate? Which are neglected?
@@ -454,11 +582,12 @@ All category names and axis labels must be annotated with definitions.}}
 
 ---
 
-## Key Findings / Trends
+## 💡 Key Findings / Trends
 
-{{3–5 bullet points on the survey's main conclusions about the state of the field:
-- **Finding**: {{statement}}. Evidence: {{which reviewed papers support this}}
-- Focus on findings that change how you'd approach work in this area}}
+> [!success] Main Takeaways
+> {{3–5 bullet points on the survey's main conclusions about the state of the field:
+> - **Finding**: {{statement}}. **Evidence**: {{which reviewed papers support this}}
+> - Focus on findings that change how you'd approach work in this area}}
 
 ---
 
@@ -472,24 +601,25 @@ For each:
 
 ---
 
-## What I'd Question
+## ⚠️ What I'd Question
 
-{{Your critical take:
-- Is the taxonomy actually useful, or does it impose artificial categories?
-- What papers or approaches did the survey miss?
-- Are the "open problems" genuinely open, or already being addressed?
-- Bias in coverage (e.g. over-represents certain labs/methods)?}}
+> [!warning] Critical Assessment
+> {{Your critical take:
+> - Is the taxonomy actually useful, or does it impose artificial categories?
+> - What papers or approaches did the survey miss?
+> - Are the "open problems" genuinely open, or already being addressed?
+> - Bias in coverage (e.g. over-represents certain labs/methods)?}}
 
 ---
 
-## Key Concepts from This Paper
+## 🧩 Key Concepts
 
 - [[concept-a]] — {{one-line}}
 - [[concept-b]] — {{one-line}}
 
 ---
 
-## Related Papers
+## 🔗 Related Papers
 
 - [[related-paper-slug]] — {{why it's related}}
 ```
@@ -501,16 +631,35 @@ For each:
 File: `Wiki/Papers/technical-reports/{{paper-slug}}.md`
 
 ```markdown
+---
+title: "{{Full Paper Title}}"
+aliases: [{{short-name}}]
+type: technical-report
+year: {{year}}
+venue: "{{venue}}"
+arxiv: "{{arxiv_id}}"
+model_type: {{foundation model / architecture / system / infrastructure}}
+scale: "{{parameter count or key scale metric}}"
+status: complete
+created: {{YYYY-MM-DD}}
+tags:
+  - type/technical-report
+  - domain/{{primary-domain}}
+  - venue/{{venue-slug}}
+  - status/complete
+---
+
 # {{Full Paper Title}}
 
-> **TL;DR**: {{One sharp sentence — what this system/model is and its core design bet.}}
+> [!abstract] TL;DR
+> {{One sharp sentence — what this system/model is and its core design bet.}}
 
 **Authors**: {{authors}} | **Year**: {{year}} | **arXiv**: [{{arxiv_id}}](https://arxiv.org/abs/{{arxiv_id}}) | **Zotero**: [Open](zotero://select/items/{{zotero_key}})
 **Venue**: {{venue}}
 
 ---
 
-## Quick Reference
+## 📋 Quick Reference
 
 | Dimension | Detail |
 |-----------|--------|
@@ -523,7 +672,7 @@ File: `Wiki/Papers/technical-reports/{{paper-slug}}.md`
 
 ---
 
-## Why This Paper Matters
+## 🎯 Why This Paper Matters
 
 {{2–3 paragraphs. Not "why this paper exists" (it exists because a lab built something) but why it matters:
 - What did the field look like before this?
@@ -531,14 +680,13 @@ File: `Wiki/Papers/technical-reports/{{paper-slug}}.md`
 - Is its importance from the architecture, the scale, the training recipe, or something else?
 Karpathy voice: be honest about what's genuinely novel vs. well-executed engineering.}}
 
-## Prerequisites
-
-- [[concept-A]] — {{one-line}}
-- [[concept-B]] — {{one-line}}
+> [!info] Prerequisites
+> - [[concept-A]] — {{one-line}}
+> - [[concept-B]] — {{one-line}}
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 {{The core technical content. Walk through the architecture or system design:
 
@@ -564,11 +712,10 @@ Karpathy voice: be honest about what's genuinely novel vs. well-executed enginee
 - "They chose X over Y because Z"
 - "This is unusual because most prior work does W instead"
 - Trade-offs: what did this design choice sacrifice?}}
-```
 
 ---
 
-## Scaling & Performance
+## 📊 Scaling & Performance
 
 {{Results framed as "what can this system do":
 - Key benchmarks and scores
@@ -587,24 +734,25 @@ This section is unique to technical reports — benchmark/method papers don't ne
 
 ---
 
-## What I'd Question
+## ⚠️ What I'd Question
 
-{{Critical assessment:
-- What limitations are underplayed in the paper?
-- What would break at larger/smaller scale?
-- Which claims haven't been independently verified?
-- What's missing from the evaluation?}}
+> [!warning] Critical Assessment
+> {{Critical assessment:
+> - What limitations are underplayed in the paper?
+> - What would break at larger/smaller scale?
+> - Which claims haven't been independently verified?
+> - What's missing from the evaluation?}}
 
 ---
 
-## Key Concepts from This Paper
+## 🧩 Key Concepts
 
 - [[concept-a]] — {{one-line}}
 - [[concept-b]] — {{one-line}}
 
 ---
 
-## Related Papers
+## 🔗 Related Papers
 
 - [[related-paper-slug]] — {{why it's related: predecessor / successor / alternative design}}
 ```
@@ -616,9 +764,24 @@ This section is unique to technical reports — benchmark/method papers don't ne
 File: `Wiki/Concepts/{{concept-slug}}.md`
 
 ```markdown
+---
+title: "{{Concept Name}}"
+aliases: [{{alternative names}}]
+type: concept
+category: {{method / evaluation / architecture / phenomenon / framework}}
+first_introduced: "[[{{paper-slug}}]]"
+status: complete
+created: {{YYYY-MM-DD}}
+tags:
+  - type/concept
+  - domain/{{primary-domain}}
+  - status/complete
+---
+
 # {{Concept Name}}
 
-> **In one sentence**: {{The sharpest, most concrete definition. Avoid "is a method that" — describe what it does.}}
+> [!abstract] In One Sentence
+> {{The sharpest, most concrete definition. Avoid "is a method that" — describe what it does.}}
 
 ---
 
@@ -626,55 +789,38 @@ File: `Wiki/Concepts/{{concept-slug}}.md`
 
 {{2–3 paragraphs explaining the concept from scratch, as if to someone who hasn't seen it.
 Use an analogy or a toy example. Make it concrete.
-Karpathy rule: if you can't explain it simply, you don't understand it yet.
-
-Example for "attention mechanism":
-"Imagine you're reading a sentence and need to decide which words to focus on
-to translate the current word. Attention lets the model learn to do exactly this —
-it computes a weighted sum over all positions in the input, where the weights
-represent 'how relevant is this position to the current step?'"}}
+Karpathy rule: if you can't explain it simply, you don't understand it yet.}}
 
 ## The Formal Version
 
 {{Now give the precise definition. Include the key equation(s).
 After each equation, unpack every term:}}
 
-> {{Key equation, e.g.:}}
-> Attention(Q, K, V) = softmax(QK^T / √d_k) V
+> {{Key equation}}
 
-- **Q** (Query): {{what it represents, shape, intuition}}
-- **K** (Key): {{what it represents, intuition}}
-- **V** (Value): {{what it represents, intuition}}
-- **√d_k**: {{why we divide — prevents dot products from growing too large}}
+- **Term 1**: {{what it represents, shape, intuition}}
+- **Term 2**: {{what it represents, intuition}}
 
 ## How to Think About It (Mental Model)
 
 {{A single concrete mental model or analogy that makes the concept stick.
-This should be different from the intuition paragraph — more specific, more memorable.
-
-Example: "Think of attention as a soft dictionary lookup:
-Q is your search query, K is the set of keys, V is the values.
-Unlike a hard lookup (exact match), you get a weighted blend of all values."}}
+This should be different from the intuition paragraph — more specific, more memorable.}}
 
 ## Common Misconceptions
 
-{{2–4 bullet points on things people get wrong about this concept.
-Example:
-- "Attention does NOT mean the model is 'looking at' specific tokens in a human sense — the weights are differentiable approximations."
-- "Higher attention weight ≠ more 'important' in a causal sense."}}
+> [!danger] Watch Out
+> {{2–4 bullet points on things people get wrong about this concept.}}
 
 ## Variants and Extensions
 
-{{List known variants with one-line descriptions.
-Example: "Multi-head attention: runs H attention heads in parallel, then concatenates."
-Link to concept entries for each variant if they exist.}}
+{{List known variants with one-line descriptions. Link to concept entries if they exist.}}
 
 ## When to Use It (and When Not To)
 
-{{Practical guidance:
-- Works well when: ...
-- Breaks down when: ...
-- Prefer X instead when: ...}}
+> [!tip] Practical Guidance
+> - **Works well when**: ...
+> - **Breaks down when**: ...
+> - **Prefer X instead when**: ...
 
 ---
 
@@ -685,6 +831,107 @@ Papers that introduce or use this concept (augmented automatically):
 | Paper | How it's used |
 |-------|--------------|
 | [[paper-slug]] | {{one-line: introduced / extends / applies to X domain}} |
+```
+
+---
+
+## MOC (Map of Content) Template
+
+File: `Wiki/MOC.md`
+
+After each batch, create or update the MOC. This is the central navigation page.
+
+```markdown
+---
+title: "Map of Content"
+type: moc
+created: {{YYYY-MM-DD}}
+updated: {{YYYY-MM-DD}}
+tags:
+  - type/moc
+---
+
+# 🗺️ Research Wiki — Map of Content
+
+> [!abstract] Overview
+> This wiki contains **{{N}} papers** and **{{M}} concepts** across {{K}} research domains.
+> Last updated: {{YYYY-MM-DD}}
+
+---
+
+## 📊 By Type
+
+### Benchmarks
+| Paper | Domain | Venue | Year |
+|-------|--------|-------|------|
+| [[paper-slug]] | {{domain}} | {{venue}} | {{year}} |
+
+### Methods
+| Paper | Domain | Venue | Year |
+|-------|--------|-------|------|
+| [[paper-slug]] | {{domain}} | {{venue}} | {{year}} |
+
+### Surveys
+| Paper | Domain | Venue | Year |
+|-------|--------|-------|------|
+
+### Technical Reports
+| Paper | Domain | Venue | Year |
+|-------|--------|-------|------|
+
+---
+
+## 🏷️ By Domain
+
+### {{Domain Name}}
+- [[paper-1]]
+- [[paper-2]]
+- Related concepts: [[concept-a]], [[concept-b]]
+
+---
+
+## 🧩 Concepts Index
+
+| Concept | Category | Introduced By |
+|---------|----------|---------------|
+| [[concept-slug]] | {{method/evaluation/...}} | [[paper-slug]] |
+
+---
+
+## 📈 Dataview Queries
+
+> [!tip] Auto-Generated Views
+> The following Dataview blocks auto-update as you add papers.
+
+### Recent Additions
+\`\`\`dataview
+TABLE type, venue, year
+FROM "Wiki/Papers"
+SORT created DESC
+LIMIT 10
+\`\`\`
+
+### Papers by Domain
+\`\`\`dataview
+TABLE type, venue, year
+FROM "Wiki/Papers"
+WHERE contains(tags, "domain/personalization")
+SORT year DESC
+\`\`\`
+
+### Benchmarks Only
+\`\`\`dataview
+TABLE domains as "Domain", venue, year
+FROM "Wiki/Papers/benchmarks"
+SORT year DESC
+\`\`\`
+
+### Concepts by Category
+\`\`\`dataview
+TABLE category, first_introduced as "First Introduced"
+FROM "Wiki/Concepts"
+SORT title ASC
+\`\`\`
 ```
 
 ---
@@ -729,6 +976,8 @@ Concept entries created (3):
 
 Concept entries updated (1):
   Wiki/Concepts/dynamic-time-warping.md  (+1 paper, +1 variant)
+
+MOC updated: Wiki/MOC.md (+1 paper, +3 concepts)
 ```
 
 ---

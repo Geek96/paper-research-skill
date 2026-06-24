@@ -57,8 +57,17 @@ Use emoji sparingly but consistently as visual anchors:
 | 🛠️ | Adoption Guide / Practical |
 | 📦 | Dataset Construction |
 | 📐 | Evaluation Framework |
-| 🗺️ | Taxonomy / Framework (surveys) |
-| 🏗️ | Architecture (technical reports) |
+| 🗺️ | Taxonomy / Framework (surveys, frameworks) |
+| 🏗️ | Architecture (technical reports) / The Framework (frameworks) |
+| 🔎 | Study Design (analyses) |
+
+### Formula Rendering (LaTeX)
+
+Obsidian uses MathJax. Always render formulas in LaTeX:
+- **Block formula**: `$$..$$` on its own line (with blank lines before and after)
+- **Inline formula**: `$...$` within text
+- After each block formula, annotate every variable on first use with inline `$...$`
+- Never write formulas as plain text in blockquotes (`> h_t = tanh(...)`) — always use LaTeX
 
 ### Tag Taxonomy
 
@@ -66,7 +75,7 @@ Frontmatter `tags` use a hierarchical system:
 
 ```yaml
 tags:
-  - type/benchmark          # type/method, type/survey, type/technical-report, type/concept
+  - type/benchmark          # type/method, type/analysis, type/framework, type/survey, type/technical-report, type/concept
   - domain/personalization  # domain/memory, domain/recommendation, domain/education, domain/medical
   - modality/text           # modality/multimodal, modality/vision
   - venue/neurips-2025      # venue/preprint, venue/acl-2025, venue/iclr-2026
@@ -151,6 +160,8 @@ Determine the paper type and use the corresponding template:
 
 - **Benchmark**: primary contribution is a dataset, evaluation suite, or leaderboard. The paper defines tasks, collects/curates data, and tests existing models. Place in `Wiki/Papers/benchmarks/`.
 - **Method**: primary contribution is a novel algorithm, architecture, or system. Place in `Wiki/Papers/methods/`.
+- **Analysis**: primary contribution is an empirical study, ablation, or deep investigation of existing methods' behavior, failure modes, or properties. Does NOT propose a new method — the value is the insight, not the technique. Includes negative results and reproducibility studies. Place in `Wiki/Papers/analyses/`.
+- **Framework**: primary contribution is a conceptual framework, taxonomy, or position paper that proposes a new way of thinking about a problem. Stronger than a survey (takes a stance), weaker than a method (doesn't implement a full solution). Includes position papers and perspective papers. Place in `Wiki/Papers/frameworks/`.
 - **Survey**: primary contribution is organizing, categorizing, and synthesizing a research field. The paper reviews many existing works and proposes a taxonomy or framework for understanding the landscape. Place in `Wiki/Papers/surveys/`.
 - **Technical Report**: primary contribution is a foundation model, infrastructure, or system design. Typically from industry labs — describes architecture, training, and capabilities without formal novelty claim. Includes model cards, system papers, and seminal architecture papers. Place in `Wiki/Papers/technical-reports/`.
 
@@ -443,12 +454,14 @@ For each key component:
 - If there's a key equation: write it out, then unpack every term.
 
 Example format:
-> The core update rule is:  h_t = tanh(W_hh · h_{t-1} + W_xh · x_t)
-> - h_t: the new hidden state (what the network "knows" at step t)
-> - h_{t-1}: what it knew last step
-> - x_t: the new input
-> - W_hh and W_xh: learned weight matrices
-> - tanh: squishes values to [-1, 1] so things don't explode
+
+$$h_t = \tanh(W_{hh} \cdot h_{t-1} + W_{xh} \cdot x_t)$$
+
+- $h_t$: the new hidden state (what the network "knows" at step t)
+- $h_{t-1}$: what it knew last step
+- $x_t$: the new input
+- $W_{hh}$ and $W_{xh}$: learned weight matrices
+- $\tanh$: squishes values to $[-1, 1]$ so things don't explode
 
 Repeat for each component. Include ASCII diagrams if they aid clarity.
 If there are multiple sub-modules, use ### sub-headers for each.}}
@@ -639,6 +652,287 @@ For each:
 ## 🔗 Related Papers
 
 - [[related-paper-slug]] — {{why it's related}}
+```
+
+---
+
+## Analysis Paper Page Template
+
+File: `Wiki/Papers/analyses/{{paper-slug}}.md`
+
+```markdown
+---
+title: "{{Full Paper Title}}"
+aliases: [{{short-name}}]
+type: analysis
+year: {{year}}
+venue: "{{venue}}"
+arxiv: "{{arxiv_id}}"
+domains: [{{domain1}}, {{domain2}}]
+status: complete
+created: {{YYYY-MM-DD}}
+tags:
+  - type/analysis
+  - domain/{{primary-domain}}
+  - venue/{{venue-slug}}
+  - status/complete
+---
+
+# {{Full Paper Title}}
+
+> [!abstract] TL;DR
+> {{One sharp sentence — the key finding or insight, not a description of what was studied.}}
+
+**Authors**: {{authors}} | **Year**: {{year}} | **arXiv**: [{{arxiv_id}}](https://arxiv.org/abs/{{arxiv_id}}) | **Zotero**: [Open](zotero://select/items/{{zotero_key}})
+**Venue**: {{venue}}
+
+---
+
+## 📋 Quick Reference
+
+| Dimension | Detail |
+|-----------|--------|
+| **Study Type** | {{empirical analysis / ablation study / negative result / reproducibility study / scaling study}} |
+| **Subject** | {{what method(s) or phenomenon is being studied}} |
+| **Key Finding** | {{the one-sentence takeaway that changes how you think}} |
+| **Methodology** | {{how the study was conducted — controlled experiments / probing / visualization / formal analysis}} |
+| **Scope** | {{# models tested, # datasets, # experiments}} |
+| **Counterintuitive?** | {{Yes/No — does this contradict conventional wisdom?}} |
+
+---
+
+## 🎯 Why This Study Exists
+
+{{2–3 paragraphs on what assumption or gap motivated this study.
+What did the field believe before? What wasn't tested?
+Why is this question important enough to dedicate a paper to?
+Karpathy voice: what's the "wait, has anyone actually checked this?" moment.}}
+
+> [!info] Prerequisites
+> - [[concept-A]] — {{one-line}}
+> - [[concept-B]] — {{one-line}}
+
+---
+
+## 🔎 Study Design
+
+### Research Questions
+
+{{List the specific questions this paper asks. Number them — the results section should answer each one.}}
+
+1. {{RQ1: ...}}
+2. {{RQ2: ...}}
+3. {{RQ3: ...}}
+
+### Experimental Setup
+
+{{How the study was conducted:
+- What models/systems were compared?
+- What datasets/tasks were used?
+- What variables were controlled?
+- What metrics were measured?
+
+Be specific enough that someone could replicate the study.}}
+
+### Controls and Baselines
+
+{{What was held constant? What was the null hypothesis?
+Karpathy voice: good experiments have clear controls. Flag if controls are weak.}}
+
+---
+
+## 📊 Key Findings
+
+{{For each research question, present the finding with evidence:}}
+
+### Finding 1: {{Short statement}}
+
+> [!success] Evidence
+> {{Specific numbers, tables, or comparisons that support this finding.
+> Include effect sizes, not just p-values.}}
+
+{{Interpretation: why does this happen? What mechanism explains it?}}
+
+### Finding 2: {{Short statement}}
+
+> [!success] Evidence
+> {{...}}
+
+{{Repeat for each major finding.}}
+
+---
+
+## 💡 The Core Insight
+
+> [!success] What Changes After Reading This
+> {{1–2 paragraphs on the single most important takeaway.
+> How should this change how the field approaches the problem?
+> What should practitioners do differently?
+> Be concrete: "Before this paper, you would do X. After, you should do Y instead."}}
+
+---
+
+## ⚠️ What I'd Question
+
+> [!warning] Critical Assessment
+> {{3–5 bullet points:
+> - Are the findings robust across different settings?
+> - Could confounding variables explain the results?
+> - Does the study generalize beyond the specific models/datasets tested?
+> - What follow-up experiments would strengthen or weaken the claims?
+> - Any methodological concerns?}}
+
+---
+
+## 🧩 Key Concepts
+
+- [[concept-a]] — {{one-line}}
+- [[concept-b]] — {{one-line}}
+
+---
+
+## 🔗 Related Papers
+
+- [[related-paper-slug]] — {{why it's related: studies same phenomenon / contradicts findings / extends analysis}}
+```
+
+---
+
+## Framework Paper Page Template
+
+File: `Wiki/Papers/frameworks/{{paper-slug}}.md`
+
+```markdown
+---
+title: "{{Full Paper Title}}"
+aliases: [{{short-name}}]
+type: framework
+year: {{year}}
+venue: "{{venue}}"
+arxiv: "{{arxiv_id}}"
+domains: [{{domain1}}, {{domain2}}]
+status: complete
+created: {{YYYY-MM-DD}}
+tags:
+  - type/framework
+  - domain/{{primary-domain}}
+  - venue/{{venue-slug}}
+  - status/complete
+---
+
+# {{Full Paper Title}}
+
+> [!abstract] TL;DR
+> {{One sharp sentence — the core thesis or proposed way of thinking.}}
+
+**Authors**: {{authors}} | **Year**: {{year}} | **arXiv**: [{{arxiv_id}}](https://arxiv.org/abs/{{arxiv_id}}) | **Zotero**: [Open](zotero://select/items/{{zotero_key}})
+**Venue**: {{venue}}
+
+---
+
+## 📋 Quick Reference
+
+| Dimension | Detail |
+|-----------|--------|
+| **Framework Type** | {{conceptual framework / taxonomy / position paper / perspective / design pattern}} |
+| **Core Thesis** | {{the one-sentence argument this paper makes}} |
+| **Scope** | {{what domain/problem this framework applies to}} |
+| **Actionable?** | {{Yes — proposes concrete methodology / Partially — proposes principles / No — purely conceptual}} |
+| **Validated?** | {{Yes — with experiments / Partially — with case studies / No — argument only}} |
+
+---
+
+## 🎯 The Problem This Framework Addresses
+
+{{2–3 paragraphs on why the field needs a new way of thinking.
+What's the current confusion or fragmentation?
+What questions can't be answered with existing frameworks?
+Karpathy voice: "Everyone is building X, but nobody has stopped to ask whether X is the right frame."}}
+
+> [!info] Prerequisites
+> - [[concept-A]] — {{one-line}}
+> - [[concept-B]] — {{one-line}}
+
+---
+
+## 🗺️ The Framework
+
+### Core Argument
+
+{{The central thesis in 2–3 paragraphs. What is this paper proposing as the "right way to think about" the problem?}}
+
+### Key Dimensions / Axes
+
+{{Most frameworks propose dimensions along which to organize thinking:}}
+
+#### Dimension 1: {{Name}}
+
+{{Definition, why it matters, what it distinguishes.}}
+
+| Category | Definition | Representative Work |
+|----------|-----------|-------------------|
+| {{Cat A}} | {{...}} | [[paper-1]], [[paper-2]] |
+| {{Cat B}} | {{...}} | [[paper-3]] |
+
+#### Dimension 2: {{Name}}
+
+{{Repeat for each dimension.}}
+
+### Proposed Methodology / Principles
+
+{{If the framework is actionable — what should practitioners do?
+Step-by-step or principle-by-principle:}}
+
+1. **{{Principle 1}}**: {{explanation}}
+2. **{{Principle 2}}**: {{explanation}}
+
+---
+
+## 📊 Validation (if any)
+
+> [!example] Evidence
+> {{How does the paper support its framework?
+> - Case studies applying the framework?
+> - Experiments comparing approaches along the proposed dimensions?
+> - Historical analysis showing the framework explains past successes/failures?
+>
+> If no validation: state explicitly that this is an argument paper, not an empirical one.}}
+
+---
+
+## 💡 What This Changes
+
+> [!success] Practical Impact
+> {{How should this framework change how researchers and practitioners approach the problem?
+> Be concrete:
+> - "When designing a new X, use dimensions A and B to evaluate your design space"
+> - "This framework reveals that most current work ignores dimension C"
+> - "The key gap identified is Z — this is where new contributions are most needed"}}
+
+---
+
+## ⚠️ What I'd Question
+
+> [!warning] Critical Assessment
+> {{3–5 bullet points:
+> - Does the framework impose artificial categories?
+> - Are the dimensions truly orthogonal or do they overlap?
+> - What important work doesn't fit neatly into this framework?
+> - Is the framework descriptive (explains what is) or prescriptive (says what should be)?
+> - Will this framework age well or is it tied to current trends?}}
+
+---
+
+## 🧩 Key Concepts
+
+- [[concept-a]] — {{one-line}}
+- [[concept-b]] — {{one-line}}
+
+---
+
+## 🔗 Related Papers
+
+- [[related-paper-slug]] — {{why it's related: validates framework / contradicts thesis / covers same domain}}
 ```
 
 ---
@@ -884,6 +1178,16 @@ tags:
 | [[paper-slug]] | {{domain}} | {{venue}} | {{year}} |
 
 ### Methods
+| Paper | Domain | Venue | Year |
+|-------|--------|-------|------|
+| [[paper-slug]] | {{domain}} | {{venue}} | {{year}} |
+
+### Analyses
+| Paper | Domain | Venue | Year |
+|-------|--------|-------|------|
+| [[paper-slug]] | {{domain}} | {{venue}} | {{year}} |
+
+### Frameworks
 | Paper | Domain | Venue | Year |
 |-------|--------|-------|------|
 | [[paper-slug]] | {{domain}} | {{venue}} | {{year}} |

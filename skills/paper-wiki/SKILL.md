@@ -396,6 +396,19 @@ tags:
 
 ---
 
+## 📋 Quick Reference
+
+| Dimension | Detail |
+|-----------|--------|
+| **Core Contribution** | {{one-line: what this paper contributes — e.g. "RL-based preference inference for personalization"}} |
+| **Method Type** | {{architecture / training pipeline / inference-time / framework / system}} |
+| **Base Model(s)** | {{what models were used — e.g. "Qwen3-8B", "Llama-3-8B", or "model-agnostic"}} |
+| **Key Result** | {{the headline number — e.g. "87.5% preference accuracy (+15.7pp over best baseline)"}} |
+| **Key Ablation** | {{the most revealing ablation — e.g. "RL vs SFT: 69.1% vs 47.9% (+21pp)"}} |
+| **Open Code** | {{Yes/No + link if available}} |
+
+---
+
 ## 🎯 Why This Paper Exists
 
 {{2–3 paragraphs on the problem this paper solves. Write in plain language.
@@ -412,21 +425,15 @@ Karpathy voice: be direct, use concrete examples, avoid hedging.}}
 
 ---
 
-## 🔬 Chapter-by-Chapter Breakdown
+## 🔬 The Method
 
-### 1. Introduction / Motivation
-
-{{What problem does the intro set up? What claim does it make?
-Paraphrase the core argument in 2–3 sentences. Is the framing honest about prior work?
-Note any surprising or counterintuitive claims the authors make upfront.}}
-
-### 2. Background / Prior Work
+### Background / Prior Work
 
 {{What are the 2–3 key papers this builds on? What does this paper need from them?
 Don't just list citations — explain the dependency.
 Example: "This paper needs [[DTW]] because the core metric is built on top of it."}}
 
-### 3. The Method — How It Actually Works
+### How It Actually Works
 
 {{This is the longest section. Walk through the method step by step.
 
@@ -443,44 +450,54 @@ Example format:
 > - W_hh and W_xh: learned weight matrices
 > - tanh: squishes values to [-1, 1] so things don't explode
 
-Repeat for each component. Include ASCII diagrams if they aid clarity.}}
+Repeat for each component. Include ASCII diagrams if they aid clarity.
+If there are multiple sub-modules, use ### sub-headers for each.}}
 
-### 4. 💡 The Key Innovation
+---
 
-{{In 1–2 paragraphs: what is genuinely new in this paper?
-Be specific and critical. Examples:
-- "The novel part is X. Prior work did Y instead, which caused problem Z."
-- "This looks like technique A from [prior paper], but differs in that..."
-Karpathy style: distinguish between what's actually new and what's packaging.}}
+## 💡 The Key Innovation
 
-### 5. 📊 Experiments
+> [!success] What's Genuinely New
+> {{In 1–2 paragraphs: what is genuinely new in this paper?
+> Be specific and critical. Examples:
+> - "The novel part is X. Prior work did Y instead, which caused problem Z."
+> - "This looks like technique A from [prior paper], but differs in that..."
+> Karpathy style: distinguish between what's actually new and what's packaging.}}
 
-{{What did they test? On what data? Against what baselines?
+---
 
-For each key result:
-- What metric? Why does that metric matter?
+## 📊 Experiments
+
+{{What did they test? On what data? Against what baselines?}}
+
+| Setting / Dataset | Metric | This Paper | Best Baseline | Δ | Notes |
+|-------------------|--------|------------|---------------|---|-------|
+| {{dataset-1}} | {{metric}} | **{{score}}** | {{baseline score}} | {{+X.X}} | {{brief}} |
+| {{dataset-2}} | {{metric}} | **{{score}}** | {{baseline score}} | {{+X.X}} | |
+
+{{After the table: 2–3 paragraphs analyzing the results.
+- What patterns emerge?
 - How big is the improvement? Is it meaningful in practice?
+- What ablation is most revealing?
 - What did they NOT test that you'd want to see?
 
 Be concrete: "They report a 3.2% improvement on benchmark X. Baseline Y was strong.
 They did not test on out-of-distribution data, which would matter most for deployment."}}
 
-### 6. What I'd Try (or Question)
+---
+
+## ⚠️ What I'd Question
 
 > [!warning] Critical Assessment
-> {{3–5 bullet points on:
+> {{3–5 bullet points combining questions AND limitations:
 > - What experiment would you run next?
 > - What assumption seems shakiest?
-> - What would you change in the method?
+> - What does the method fail on? What assumptions does it make?
+> - When would you NOT use this approach?
 > - What does this suggest for your own work?
 >
-> Be specific. "I would try X because Y" not "future work should explore X."}}
-
-### 7. Limitations (Honest Version)
-
-{{The authors' stated limitations + any they missed.
-What does the method fail on? What assumptions does it make?
-When would you NOT use this approach?}}
+> Be specific. "I would try X because Y" not "future work should explore X."
+> Include the authors' stated limitations + any they missed.}}
 
 ---
 

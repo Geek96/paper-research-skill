@@ -35,10 +35,10 @@ Attention mechanism 早在 Bahdanau (2014) 就被提出，但一直是 RNN 的"�
 
 ## Prerequisites
 
-To understand this paper, you need:
-- [[scaled-dot-product-attention]] — Transformer 的最基本运算单元
-- [[encoder-decoder-architecture]] — 理解 seq2seq 框架，知道为什么需要 encoder 和 decoder
-- [[positional-encoding]] — Transformer 没有 recurrence，位置信息怎么注入
+> [!info] Prerequisites
+> - [[scaled-dot-product-attention]] — Transformer 的最基本运算单元
+> - [[encoder-decoder-architecture]] — 理解 seq2seq 框架，知道为什么需要 encoder 和 decoder
+> - [[positional-encoding]] — Transformer 没有 recurrence，位置信息怎么注入
 
 ---
 

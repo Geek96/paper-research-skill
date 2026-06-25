@@ -316,26 +316,63 @@ npx -y @smithery/cli install @MarkusPfundstein/mcp-obsidian --client claude
 ## 👀 示例展示
 
 > [`demo/`](demo/) 目录中的所有文件都是 `paper-wiki` 的**真实输出**，不是手工制作的样例。
+> 以下截图直接取自 Obsidian，展示 callout、LaTeX 公式和 wiki-link 的实际渲染效果。
 
 ### Method 示例 — [Attention Is All You Need](demo/methods/attention-is-all-you-need.md)
 
-开启 Transformer 时代的论文。展示了 Method 模板的核心能力：
+开启 Transformer 时代的论文。
 
-- 7 个 LaTeX 公式在 Obsidian 中渲染（`$$\text{Attention}(Q,K,V)$$`、`$$\text{MultiHead}$$`、FFN、Positional Encoding）
-- 逐步方法拆解（6 个子章节，含架构说明）
-- `> [!success]` 提示框标注核心创新点
-- `> [!warning]` 提示框中 9 个批判性问题
-- 6 个 `[[concept]]` 概念词条双向链接
+**Dataview frontmatter + `[!abstract]` TL;DR 提示框：**
+
+<img src="demo/screenshots/method-frontmatter-tldr.png" width="700" alt="Obsidian 中渲染的 frontmatter 属性和 TL;DR 提示框"/>
+
+**`[[wiki-links]]` 概念词条双向链接（紫色链接）：**
+
+<img src="demo/screenshots/method-wikilinks.png" width="700" alt="紫色 wiki-link 内链"/>
+
+**LaTeX 公式渲染 — Attention & Multi-Head：**
+
+<img src="demo/screenshots/method-formulas.png" width="700" alt="Scaled dot-product attention 和 multi-head attention 公式"/>
+
+**更多公式 — FFN & Positional Encoding（sin/cos）：**
+
+<img src="demo/screenshots/method-formulas-pe.png" width="700" alt="FFN 和 positional encoding 公式"/>
+
+**`[!success]` 提示框 — Key Innovation（绿色）：**
+
+<img src="demo/screenshots/method-callout-success.png" width="700" alt="绿色 success 提示框"/>
+
+**`[!warning]` 提示框 — Critical Assessment（橙色）+ Key Concepts wiki-links：**
+
+<img src="demo/screenshots/method-callout-warning.png" width="700" alt="橙色 warning 提示框和概念反向链接"/>
 
 ### Benchmark 示例 — [PersonaLens](demo/benchmarks/personalens.md)
 
-ACL 2025 Findings — 面向 20 个领域的个性化对话评测。展示了 Benchmark 模板的核心能力：
+ACL 2025 Findings — 面向 20 个领域的个性化对话评测。
 
-- Quick Reference 速查表（10 个维度）
-- 评分量表（rubric）嵌入 `> [!example]` 提示框（Personalization 1–4 评分标准）
-- Baseline 对比表（5 个模型 × 4 个指标 × 单域/多域）
-- `> [!tip]` 使用指南，含快速试验建议
-- 数据构建流水线（7 步 curation 流程）
+**Dataview frontmatter + TL;DR 提示框：**
+
+<img src="demo/screenshots/bench-frontmatter-tldr.png" width="700" alt="PersonaLens frontmatter 和 TL;DR 提示框"/>
+
+**Quick Reference 速查表（10 个维度）：**
+
+<img src="demo/screenshots/bench-quickref-table.png" width="700" alt="Quick Reference 表格和 wiki-links"/>
+
+**Task Definitions + `[!example]` 提示框：**
+
+<img src="demo/screenshots/bench-task-definitions.png" width="700" alt="任务定义和示例提示框"/>
+
+**Evaluation Framework + `[!info]` Personalization Rubric + Baseline Results 表格：**
+
+<img src="demo/screenshots/bench-evaluation-rubric.png" width="700" alt="评分量表和基线结果"/>
+
+**`[!success]` Key Findings（绿色）：**
+
+<img src="demo/screenshots/bench-baseline-results.png" width="700" alt="基线结果和关键发现"/>
+
+**`[!tip]` Adoption Guide + `[!warning]` Critical Assessment + Key Concepts wiki-links：**
+
+<img src="demo/screenshots/bench-adoption-guide.png" width="700" alt="使用指南和批判性评估"/>
 
 ### Concept 概念词条示例
 
@@ -362,7 +399,8 @@ paper-research-skill/
 ├── demo/                          # 真实 Wiki 输出示例
 │   ├── methods/                   #   Method 论文示例
 │   ├── benchmarks/                #   Benchmark 论文示例
-│   └── concepts/                  #   概念词条示例
+│   ├── concepts/                  #   概念词条示例
+│   └── screenshots/               #   Obsidian 渲染截图
 ├── .claude-plugin/plugin.json     # Claude Code 插件清单
 ├── CHANGELOG.md
 ├── CLAUDE.md                      # 开发规范

@@ -394,7 +394,17 @@ paper-research-skill/
 │   ├── paper-research/SKILL.md    # 全流程编排器
 │   ├── paper-fetch/SKILL.md       # 搜索与下载
 │   ├── paper-zotero/SKILL.md      # Zotero 导入
-│   ├── paper-wiki/SKILL.md        # 深度 Wiki（模板 + 视觉设计系统）
+│   ├── paper-wiki/
+│   │   ├── SKILL.md               # 深度 Wiki（流程 + 视觉设计系统）
+│   │   └── templates/             # 按需加载模板（节省约 60% tokens）
+│   │       ├── benchmark.md
+│   │       ├── method.md
+│   │       ├── survey.md
+│   │       ├── analysis.md
+│   │       ├── framework.md
+│   │       ├── technical-report.md
+│   │       ├── concept.md
+│   │       └── moc.md
 │   └── paper-version/SKILL.md     # 版本查询
 ├── demo/                          # 真实 Wiki 输出示例
 │   ├── methods/                   #   Method 论文示例

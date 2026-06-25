@@ -395,7 +395,17 @@ paper-research-skill/
 │   ├── paper-research/SKILL.md    # Pipeline orchestrator
 │   ├── paper-fetch/SKILL.md       # Search & download
 │   ├── paper-zotero/SKILL.md      # Zotero import
-│   ├── paper-wiki/SKILL.md        # Deep wiki (templates + visual design system)
+│   ├── paper-wiki/
+│   │   ├── SKILL.md               # Deep wiki (process + visual design system)
+│   │   └── templates/             # On-demand templates (saves ~60% tokens)
+│   │       ├── benchmark.md
+│   │       ├── method.md
+│   │       ├── survey.md
+│   │       ├── analysis.md
+│   │       ├── framework.md
+│   │       ├── technical-report.md
+│   │       ├── concept.md
+│   │       └── moc.md
 │   └── paper-version/SKILL.md     # Version check
 ├── demo/                          # Real wiki output examples
 │   ├── methods/                   #   Method paper demo

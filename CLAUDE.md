@@ -4,30 +4,43 @@ This file tells Claude (and human contributors) how to maintain this repository 
 
 ---
 
-## Versioning
+## ⚠️ Versioning — EVERY COMMIT MUST FOLLOW
+
+> **MANDATORY**: Agent 每次 commit 前必须执行版本检查。不执行 = 违规。
+> **禁止跳版本号**：Agent 只能递增 PATCH（最后一位），绝对不能跳版本（如 1.0.5 → 1.4.0 ❌）。
 
 Version format: `MAJOR.MINOR.PATCH` — stored in `.claude-plugin/plugin.json` as the `version` field. This is the single source of truth.
 
 | Component | Rule | Who controls |
 |-----------|------|--------------|
-| **PATCH** | Increment by 1 on every commit that changes a skill, template, or user-facing content | Claude (automatic) |
-| **MINOR** | Auto-increment when PATCH reaches **10**, then reset PATCH to 0 | Claude (automatic carry) |
-| **MAJOR** | Only when user or a contributor explicitly says "bump major" or "this is a breaking change" | Human only |
+| **PATCH** | +1 on every commit that changes skill/template/user-facing content | Claude (automatic) |
+| **MINOR** | Auto-increment when PATCH reaches **10**, reset PATCH to 0 | Claude (automatic carry) |
+| **MAJOR** | Only when user explicitly says "bump major" or "breaking change" | **Human only** |
 
-**Step-by-step for every commit:**
+### 🔴 Pre-Commit Checklist（每次 commit 前必做）
 
-1. Identify the current version in `.claude-plugin/plugin.json`
-2. If the commit changes any `SKILL.md`, `plugin.json` (non-version fields), `README.md`, or `CHANGELOG.md` → increment PATCH
-3. If new PATCH = 10 → set PATCH = 0, increment MINOR instead
-4. If MAJOR change is explicitly requested → increment MAJOR, reset MINOR and PATCH to 0
-5. Update the `version` field in `.claude-plugin/plugin.json` in the same commit
-6. Skip version bump for: `.gitignore`, `LICENSE`, inline comments with zero behavior change
+```
+□ 1. cat .claude-plugin/plugin.json → 读取当前版本号
+□ 2. 本次 commit 改了 SKILL.md / templates/ / plugin.json / README.md / CHANGELOG.md？
+     → YES: PATCH +1（只 +1，不跳）
+     → NO:  不 bump
+□ 3. PATCH = 10？→ PATCH 归零，MINOR +1
+□ 4. 在同一个 commit 中更新 plugin.json 的 version
+□ 5. commit message 中包含版本号
+```
 
-**Examples:**
-- `1.0.3` → next patch → `1.0.4`
-- `1.0.9` → next patch → `1.1.0` (carry)
-- `1.1.9` → next patch → `1.2.0` (carry)
-- User says "bump major" → `1.2.4` → `2.0.0`
+**跳过 bump**: `.gitignore`, `LICENSE`, 纯注释（无行为变化）
+
+### Examples
+
+| Before | Action | After | OK? |
+|--------|--------|-------|-----|
+| `1.0.3` | patch | `1.0.4` | ✅ |
+| `1.0.9` | patch (carry) | `1.1.0` | ✅ |
+| `1.1.9` | patch (carry) | `1.2.0` | ✅ |
+| `1.2.4` | user says "bump major" | `2.0.0` | ✅ |
+| `1.0.5` | agent jumps | `1.4.0` | ❌ 禁止 |
+| `1.3.0` | agent bumps major | `2.0.0` | ❌ 需用户授权 |
 
 ---
 
@@ -75,6 +88,7 @@ docs: short description
 ```
 
 Always include the version bump in the commit that triggers it — don't make a separate "bump version" commit.
+**版本号必须出现在 commit message 末尾**，格式：`(v1.3.9)`。例如：`feat(paper-wiki): add concept template (v1.3.9)`
 
 ---
 

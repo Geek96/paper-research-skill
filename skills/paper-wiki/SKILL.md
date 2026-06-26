@@ -189,6 +189,38 @@ After creating/updating paper and concept pages, update the MOC index:
 
 The MOC serves as the central navigation hub for the entire wiki.
 
+### Step 7 — Synthesis Check
+
+After completing all paper/concept/MOC updates, perform a synthesis check:
+
+#### 7a — Auto-suggest (first synthesis)
+
+If `Wiki/Synthesis/` does not exist or is empty:
+1. Count the total number of paper pages in `Wiki/Papers/` (across all subdirectories)
+2. If **≥ 10 papers** → prompt the user:
+   > "Wiki 中已有 {{N}} 篇论文。是否需要生成一份 Synthesis（跨论文横向对比 + 共性发现 + 开放问题）？"
+3. If the user agrees → read `templates/synthesis.md`, generate the synthesis page in `Wiki/Synthesis/`
+
+#### 7b — Auto-update (existing synthesis)
+
+If `Wiki/Synthesis/` already contains synthesis pages:
+1. For each synthesis page, read its `scope` frontmatter field (list of paper wiki-links)
+2. Check if the **newly added paper** belongs to the same research direction as an existing synthesis (based on `domains` tag overlap or subdirectory match)
+3. If yes → **automatically update** the existing synthesis:
+   - Add the new paper to the `scope` list in frontmatter
+   - Add a row to the relevant Landscape comparison table
+   - Check if the new paper provides evidence for existing Findings → update Evidence sections
+   - Check if the new paper contradicts existing Findings → add to Contradictions
+   - Update the `updated` date in frontmatter
+   - Update the Findings evidence heatmap counts
+4. Report what was updated:
+   ```
+   Synthesis updated: Wiki/Synthesis/{{slug}}.md
+     + Added [[new-paper]] to scope (now {{N}} papers)
+     + Updated F2 (隐式偏好) with new evidence
+     + Added new row to Method comparison table
+   ```
+
 ---
 
 ## Templates (loaded on demand)
@@ -214,6 +246,7 @@ These are used for every paper regardless of type — load them alongside the pa
 |----------|------|
 | `templates/concept.md` | Step 4 — creating new concept entries |
 | `templates/moc.md` | Step 6 — creating or updating the MOC |
+| `templates/synthesis.md` | Step 7 — creating or updating synthesis pages |
 
 ### How to use
 
@@ -221,6 +254,7 @@ In Step 3, after classifying the paper type:
 1. Read the corresponding paper template file (e.g. `templates/method.md`)
 2. Read `templates/concept.md` for Step 4
 3. Read `templates/moc.md` for Step 6 (if MOC needs creation)
+4. Read `templates/synthesis.md` for Step 7 (if synthesis creation/update needed)
 
 
 ---
@@ -267,6 +301,12 @@ Concept entries updated (1):
   Wiki/Concepts/dynamic-time-warping.md  (+1 paper, +1 variant)
 
 MOC updated: Wiki/MOC.md (+1 paper, +3 concepts)
+
+Synthesis: Wiki 中已有 12 篇论文，是否生成 Synthesis？
+  — or —
+Synthesis updated: Wiki/Synthesis/personalization-landscape.md
+  + Added [[soft-msm]] to scope (now 13 papers)
+  + Updated F3 (长上下文衰减) with new evidence
 ```
 
 ---

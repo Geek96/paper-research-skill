@@ -7,6 +7,30 @@ Version scheme: `MAJOR.MINOR.PATCH` — see [CLAUDE.md](./CLAUDE.md) for rules.
 
 ---
 
+## [1.4.0] — 2026-06-26
+
+### Added
+- `paper-wiki`: Synthesis page type — cross-paper landscape comparison, findings, contradictions, and open questions
+- `paper-wiki`: `templates/synthesis.md` — full template with callouts, mermaid diagrams, coverage matrix, evidence heatmap
+- `paper-wiki`: Step 7 Synthesis Check — auto-suggest synthesis when vault has 10+ papers; auto-update existing synthesis on new paper additions
+- `paper-wiki`: Analysis and Framework paper types with dedicated templates (`templates/analysis.md`, `templates/framework.md`)
+- `paper-wiki`: Visual Design System — callout types, emoji section headers, tag taxonomy, reading status tracking
+- Demo screenshots: 14 Obsidian screenshots (method + benchmark examples) with cropped PersonaLens views
+- `README.zh-CN.md`: Chinese README with language switcher
+
+### Changed
+- `paper-wiki`: Extracted 8 inline templates into on-demand `templates/` directory (~60% token savings per invocation)
+- `paper-wiki`: Method template redesigned — flat structure with Quick Reference table, promoted sections, consistent callouts
+- `CLAUDE.md`: Strengthened versioning rules with pre-commit checklist, anti-pattern examples, and commit message format
+- `README.md`: Redesigned with visual pipeline diagram, paper type table, and detailed MCP setup guide
+
+### Removed
+- `paper-moc`: Consolidated into `paper-wiki` (MOC is now Step 6)
+- `paper-dataview`: Consolidated into `paper-wiki` (frontmatter is now part of templates)
+- `paper-note`: Fully replaced by `paper-wiki`
+
+---
+
 ## [1.0.5] — 2026-06-10
 
 ### Added

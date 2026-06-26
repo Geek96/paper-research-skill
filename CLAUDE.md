@@ -44,35 +44,42 @@ Version format: `MAJOR.MINOR.PATCH` — stored in `.claude-plugin/plugin.json` a
 
 ---
 
-## Changelog
+## Changelog & Release
 
-Update `CHANGELOG.md` for every **user-facing** change. Skip internal-only changes.
+### 三层记录体系
 
-**Write a changelog entry when:**
-- ✅ A new skill or sub-skill is added
-- ✅ Skill output format or behavior changes
-- ✅ Template structure is modified
-- ✅ Formatting rules are added or changed
-- ✅ A bug fix that affects skill output is made
-- ✅ A breaking change is introduced (mark with `⚠️ Breaking`)
+| 层级 | 文件 | 粒度 | 何时写 |
+|------|------|------|-------|
+| **Git log** | git commit messages | 每次 commit | 自动 |
+| **CHANGELOG.md** | `CHANGELOG.md` | 每次 MINOR 进位 | 进位时汇总该轮所有 patch |
+| **GitHub Release** | GitHub Releases | 每次 MINOR 进位 | 与 CHANGELOG 同步，`gh release create` |
 
-**Skip a changelog entry when:**
-- ❌ `.gitignore`, `LICENSE`, `CLAUDE.md` internal edits
-- ❌ Typo fixes in non-template prose
-- ❌ Refactors with identical output behavior
+### CHANGELOG 规则
+
+> **不逐 PATCH 写 CHANGELOG**。在 MINOR 进位时（如 1.3.9 → 1.4.0），回顾该 MINOR 周期内所有 commit，汇总为一个 release entry。
+
+**写入内容（汇总时）：**
+- ✅ 新增的 skill / sub-skill / template
+- ✅ Skill 输出格式或行为变化
+- ✅ 模板结构修改
+- ✅ Bug fix（影响 skill 输出的）
+- ✅ Breaking change（标记 `⚠️ Breaking`）
+
+**跳过：**
+- ❌ `.gitignore`, `LICENSE`, `CLAUDE.md` 内部编辑
+- ❌ 非模板文字的 typo 修复
+- ❌ 输出行为不变的重构
 
 **Format:** [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) style.
 Group entries under: `Added`, `Changed`, `Fixed`, `Removed`.
 
-```markdown
-## [1.0.4] — YYYY-MM-DD
+### Release 规则
 
-### Added
-- `paper-version` skill: `/version` command reports installed version
-
-### Changed
-- `paper-wiki`: formula examples now use LaTeX `$$...$$` syntax
-```
+在 MINOR 进位时执行：
+1. 更新 `CHANGELOG.md`（汇总本轮所有 patch）
+2. `git tag v{{version}}`
+3. `gh release create v{{version}}` — release notes 复用 CHANGELOG 内容
+4. 不在 PATCH 级别打 tag 或发 release
 
 ---
 

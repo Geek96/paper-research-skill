@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/AI_Agent-Skill-7C3AED?style=for-the-badge" alt="AI Agent Skill"/>
-  <img src="https://img.shields.io/github/v/release/Geek96/paper-research-skill?style=for-the-badge&color=10B981" alt="Latest Release"/>
+  <img src="https://img.shields.io/badge/version-1.4.2-10B981?style=for-the-badge" alt="Version 1.4.1"/>
   <img src="https://img.shields.io/github/license/Geek96/paper-research-skill?style=for-the-badge&color=6B7280" alt="MIT License"/>
 </p>
 

@@ -26,7 +26,8 @@ Version format: `MAJOR.MINOR.PATCH` — stored in `.claude-plugin/plugin.json` a
      → NO:  不 bump
 □ 3. PATCH = 10？→ PATCH 归零，MINOR +1
 □ 4. 在同一个 commit 中更新 plugin.json 的 version
-□ 5. commit message 中包含版本号
+□ 5. 同步更新 README.md 顶部 badge 中的版本号
+□ 6. commit message 中包含版本号
 ```
 
 **跳过 bump**: `.gitignore`, `LICENSE`, 纯注释（无行为变化）

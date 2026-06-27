@@ -1,6 +1,6 @@
 {
   "name": "paper-research-skill",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Academic paper research pipeline: fetch → Zotero → Obsidian wiki",
   "author": {
     "name": "Geek96",

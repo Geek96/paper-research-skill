@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Claude_Code-Skill-7C3AED?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiPjxwYXRoIGQ9Ik0xMiAyMGgxYTEgMSAwIDAgMCAxLTFWM2ExIDEgMCAwIDAtMS0xSDZhMSAxIDAgMCAwLTEgMXYyIi8+PHBhdGggZD0iTTEyIDRWMmExIDEgMCAwIDEgMS0xaDRhMSAxIDAgMCAxIDEgMXY0Ii8+PC9zdmc+" alt="Claude Code Skill"/>
+  <img src="https://img.shields.io/badge/AI_Agent-Skill-7C3AED?style=for-the-badge" alt="AI Agent Skill"/>
   <img src="https://img.shields.io/github/v/release/Geek96/paper-research-skill?style=for-the-badge&color=10B981" alt="Latest Release"/>
   <img src="https://img.shields.io/github/license/Geek96/paper-research-skill?style=for-the-badge&color=6B7280" alt="MIT License"/>
 </p>
@@ -7,9 +7,11 @@
 <h1 align="center">📚 paper-research-skill</h1>
 
 <p align="center">
-  <strong>A modular Claude Code skill for the full academic paper research pipeline</strong>
+  <strong>A modular AI agent skill for the full academic paper research pipeline</strong>
   <br/>
   <code>search / download → Zotero → Obsidian wiki</code>
+  <br/><br/>
+  Works with <strong>Claude Code</strong> · <strong>Codex CLI</strong> · <strong>Gemini CLI</strong> · <strong>CodeBuddy</strong> · <strong>Marvis</strong> · <strong>DeepSeek</strong> · and any agent that reads <code>.md</code> skills
 </p>
 
 <p align="center">
@@ -23,26 +25,231 @@
 - **Multi-source search** — arXiv, PubMed, Semantic Scholar, bioRxiv, Google Scholar
 - **Zotero integration** — import by DOI or PDF with auto-deduplication
 - **Karpathy-style wiki** — deep paper breakdowns with intuition-first concept entries
-- **6 paper types** — benchmark, method, analysis, framework, survey, technical report
+- **7 output types** — benchmark, method, analysis, framework, survey, technical report, synthesis
+- **Synthesis** — cross-paper landscape comparison, contradiction analysis, open questions (auto-suggested at 10+ papers)
 - **LaTeX formula rendering** — MathJax-compatible equations in Obsidian
 - **Dataview-ready** — structured frontmatter for queries, dashboards, and MOCs
 - **Multilingual** — output in English, 中文, or mixed
+- **Agent-agnostic** — core content is plain `.md` files, works with any AI coding agent
 
 ---
 
-## 🚀 Quick Start
+## 📦 Installation
+
+All skills are plain `.md` files — any agent that can read markdown can use them. Pick your agent below.
+
+### Claude Code
 
 ```bash
 npx skills add Geek96/paper-research-skill
 ```
 
-Then in Claude Code:
+Done. Skills are auto-registered via `.claude-plugin/plugin.json`.
+
+### Codex CLI (OpenAI)
+
+```bash
+git clone https://github.com/Geek96/paper-research-skill.git
+cd paper-research-skill
+```
+
+Codex auto-discovers skills from the `.agents/skills/` directory (already included in this repo). To use in a project, either:
+
+- **Option A** — Symlink into your project:
+  ```bash
+  ln -s /path/to/paper-research-skill/.agents your-project/.agents
+  ```
+- **Option B** — Add to `AGENTS.md` in your project root:
+  ```markdown
+  ## Skills
+  Load skills from: /path/to/paper-research-skill/.agents/skills/
+  ```
+
+### Gemini CLI
+
+```bash
+git clone https://github.com/Geek96/paper-research-skill.git
+```
+
+Add to your project's `GEMINI.md`:
+
+```markdown
+## Skills
+Load skills from: /path/to/paper-research-skill/skills/
+
+Available skills:
+- paper-research — Full pipeline orchestrator
+- paper-fetch — Search & download PDFs
+- paper-zotero — Import to Zotero
+- paper-wiki — Deep wiki + concepts + MOC
+```
+
+### CodeBuddy (Tencent)
+
+```bash
+git clone https://github.com/Geek96/paper-research-skill.git
+```
+
+CodeBuddy reads `.md` skill files directly. Add to your project's `CODEBUDDY.md` or agent config:
+
+```markdown
+## Skills Directory
+/path/to/paper-research-skill/skills/
+```
+
+### Marvis
+
+```bash
+git clone https://github.com/Geek96/paper-research-skill.git
+```
+
+Point Marvis to the skills directory in your agent configuration:
 
 ```
-> Research the latest papers on RAG for code generation, last 2 years
-> Import these 5 DOIs to Zotero and create wiki entries
-> Summarize this PDF and create a note in my Obsidian vault
+Skills path: /path/to/paper-research-skill/skills/
 ```
+
+### DeepSeek Agent
+
+```bash
+git clone https://github.com/Geek96/paper-research-skill.git
+```
+
+Add to your project root config (`.deepseek/config.md` or equivalent):
+
+```markdown
+## External Skills
+/path/to/paper-research-skill/skills/
+```
+
+### Other Agents
+
+Any agent that can read `.md` files can use this skill:
+
+1. Clone the repo
+2. Point the agent to the `skills/` directory
+3. Each `skills/<name>/SKILL.md` is a self-contained skill definition
+
+---
+
+## 🔧 MCP Servers Setup
+
+> **Required by all agents** — MCP servers provide the search, Zotero, and Obsidian integration capabilities. These are agent-agnostic.
+
+### Setup Checklist
+
+```
+☐ paper-search-mcp  ← search & download papers (no credentials)
+☐ mcp-zotero         ← Zotero integration (API key + User ID)
+☐ mcp-obsidian       ← Obsidian vault access (plugin + API key)
+```
+
+### 1. Paper Search MCP
+
+> Provides: arXiv, PubMed, Semantic Scholar, bioRxiv search + PDF download
+
+```bash
+npx -y @smithery/cli install @openags/paper-search-mcp --client claude
+```
+
+<details>
+<summary><strong>Manual install</strong></summary>
+
+```bash
+git clone https://github.com/openags/paper-search-mcp.git
+cd paper-search-mcp && npm install && npm run build
+```
+
+Add to your MCP config:
+```json
+{
+  "paper-search-mcp": {
+    "command": "node",
+    "args": ["/path/to/paper-search-mcp/dist/index.js"]
+  }
+}
+```
+
+</details>
+
+### 2. Zotero MCP
+
+> Provides: import papers by DOI, manage collections, search library, inject citations
+
+**Step 1 — Get Zotero API credentials:**
+
+1. Go to [zotero.org/settings/keys](https://www.zotero.org/settings/keys)
+2. **Create new private key** → allow library access + write access
+3. Copy the key and note your **User ID** (number at top of page)
+
+**Step 2 — Install:**
+
+```bash
+npx -y @smithery/cli install @Xevos117/mcp-zotero --client claude
+```
+
+<details>
+<summary><strong>Manual install</strong></summary>
+
+```bash
+git clone https://github.com/Xevos117/mcp-zotero.git
+cd mcp-zotero && npm install && npm run build
+```
+
+```json
+{
+  "mcp-zotero": {
+    "command": "node",
+    "args": ["/path/to/mcp-zotero/dist/index.js"],
+    "env": {
+      "ZOTERO_API_KEY": "your_key",
+      "ZOTERO_USER_ID": "your_id"
+    }
+  }
+}
+```
+
+</details>
+
+### 3. Obsidian MCP
+
+> Provides: read/write files in your Obsidian vault
+
+**Step 1 — Install Obsidian plugin:**
+
+1. Obsidian → Settings → Community plugins → Browse → **Local REST API** → Install & Enable
+2. Note the API port (default `27123`) and copy the API key
+
+**Step 2 — Install MCP:**
+
+```bash
+npx -y @smithery/cli install @MarkusPfundstein/mcp-obsidian --client claude
+```
+
+<details>
+<summary><strong>Manual install</strong></summary>
+
+```bash
+git clone https://github.com/MarkusPfundstein/mcp-obsidian.git
+cd mcp-obsidian && npm install && npm run build
+```
+
+```json
+{
+  "mcp-obsidian": {
+    "command": "node",
+    "args": ["/path/to/mcp-obsidian/dist/index.js"],
+    "env": {
+      "OBSIDIAN_API_KEY": "your_key",
+      "OBSIDIAN_API_PORT": "27123"
+    }
+  }
+}
+```
+
+</details>
+
+> **Note:** Obsidian must be open with the Local REST API plugin running. If MCP is unavailable, the skill falls back to writing files directly to the filesystem.
 
 ---
 
@@ -68,7 +275,7 @@ Then in Claude Code:
 │                    │ Deep wiki  │                            │
 │                    │ + Concepts │                            │
 │                    │ + MOC      │                            │
-│                    │ + Dataview │                            │
+│                    │ + Synthesis│                            │
 │                    └────────────┘                            │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -78,14 +285,14 @@ Then in Claude Code:
 | **`paper-research`** | Full pipeline orchestrator — start here | "Research papers on X" |
 | `paper-fetch` | Search & download PDFs | "Find papers on X" / provide DOIs |
 | `paper-zotero` | Import to Zotero with dedup | "Import these papers to Zotero" |
-| `paper-wiki` | Deep wiki + concepts + MOC + Dataview | "Add to my wiki" |
+| `paper-wiki` | Deep wiki + concepts + MOC + synthesis | "Add to my wiki" |
 | `paper-version` | Check installed version | `/version` |
 
 ---
 
-## 📝 Wiki Paper Types
+## 📝 Wiki Output Types
 
-`paper-wiki` classifies papers into 6 types, each with a dedicated template:
+`paper-wiki` classifies papers into 6 types, each with a dedicated template. Plus a 7th type — **Synthesis** — for cross-paper analysis.
 
 | Type | Directory | When to use | Key sections |
 |------|-----------|-------------|-------------|
@@ -95,6 +302,7 @@ Then in Claude Code:
 | **Framework** | `Papers/frameworks/` | Conceptual frameworks, position papers | Core Argument → Dimensions → Validation |
 | **Survey** | `Papers/surveys/` | Field overviews, taxonomies | Taxonomy → Coverage Analysis → Open Problems |
 | **Tech Report** | `Papers/technical-reports/` | Foundation models, system papers | Architecture → Training → Capability Analysis |
+| **Synthesis** | `Synthesis/` | Cross-paper analysis (auto-suggested at 10+ papers) | Landscape tables → Cross-Paper Findings → Contradictions → Open Questions |
 
 All templates include:
 - 📋 **Quick Reference** table for at-a-glance overview
@@ -102,178 +310,6 @@ All templates include:
 - `$$...$$` block and `$...$` inline LaTeX formula rendering
 - Structured frontmatter for Dataview queries
 - `[[wiki-links]]` for concept cross-referencing
-
----
-
-## 🔧 Prerequisites Setup
-
-This skill relies on 3 MCP servers. Follow the steps below for each one.
-
-### 1. Paper Search MCP
-
-> Provides: arXiv, PubMed, Semantic Scholar, bioRxiv search + PDF download
-
-**One-command install via Smithery:**
-
-```bash
-npx -y @smithery/cli install @openags/paper-search-mcp --client claude
-```
-
-<details>
-<summary><strong>Manual install (if Smithery doesn't work)</strong></summary>
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/openags/paper-search-mcp.git
-   cd paper-search-mcp
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Build:
-   ```bash
-   npm run build
-   ```
-
-4. Add to your Claude Code MCP config (`~/.claude/settings.json` → `mcpServers`):
-   ```json
-   {
-     "paper-search-mcp": {
-       "command": "node",
-       "args": ["/path/to/paper-search-mcp/dist/index.js"]
-     }
-   }
-   ```
-
-</details>
-
-**Verify**: In Claude Code, try `Search arXiv for "transformer attention"`. If it returns results, you're good.
-
----
-
-### 2. Zotero MCP
-
-> Provides: import papers by DOI, manage collections, search library, inject citations
-
-**Step 1 — Get your Zotero API credentials:**
-
-1. Go to [zotero.org/settings/keys](https://www.zotero.org/settings/keys)
-2. Click **Create new private key**
-3. Give it a name (e.g. "Claude Code")
-4. Under **Personal Library**, check:
-   - ✅ Allow library access
-   - ✅ Allow write access
-5. Click **Save Key** and copy the key
-
-6. Find your **User ID**: Go to [zotero.org/settings/keys](https://www.zotero.org/settings/keys) — your user ID is shown at the top of the page (a number like `12345678`)
-
-**Step 2 — Install the MCP server:**
-
-```bash
-npx -y @smithery/cli install @Xevos117/mcp-zotero --client claude
-```
-
-When prompted, enter:
-- `ZOTERO_API_KEY`: your key from Step 1
-- `ZOTERO_USER_ID`: your user ID from Step 1
-
-<details>
-<summary><strong>Manual install</strong></summary>
-
-1. Clone and build:
-   ```bash
-   git clone https://github.com/Xevos117/mcp-zotero.git
-   cd mcp-zotero
-   npm install && npm run build
-   ```
-
-2. Add to MCP config:
-   ```json
-   {
-     "mcp-zotero": {
-       "command": "node",
-       "args": ["/path/to/mcp-zotero/dist/index.js"],
-       "env": {
-         "ZOTERO_API_KEY": "your_api_key_here",
-         "ZOTERO_USER_ID": "your_user_id_here"
-       }
-     }
-   }
-   ```
-
-</details>
-
-**Verify**: In Claude Code, try `Search my Zotero library for "attention"`. If it queries your library, you're good.
-
----
-
-### 3. Obsidian MCP
-
-> Provides: read/write files in your Obsidian vault
-
-You need the **Obsidian Local REST API** plugin + an MCP bridge.
-
-**Step 1 — Install the Obsidian plugin:**
-
-1. Open Obsidian → Settings → Community plugins → Browse
-2. Search for **Local REST API**
-3. Install and enable it
-4. In the plugin settings:
-   - Note the **API port** (default: `27123`)
-   - Copy the **API Key** (click "Copy API key")
-   - Enable HTTPS if you want (optional)
-
-**Step 2 — Install the MCP server:**
-
-```bash
-npx -y @smithery/cli install @MarkusPfundstein/mcp-obsidian --client claude
-```
-
-When prompted, enter your API key from Step 1.
-
-<details>
-<summary><strong>Manual install</strong></summary>
-
-1. Clone and build:
-   ```bash
-   git clone https://github.com/MarkusPfundstein/mcp-obsidian.git
-   cd mcp-obsidian
-   npm install && npm run build
-   ```
-
-2. Add to MCP config:
-   ```json
-   {
-     "mcp-obsidian": {
-       "command": "node",
-       "args": ["/path/to/mcp-obsidian/dist/index.js"],
-       "env": {
-         "OBSIDIAN_API_KEY": "your_api_key_here",
-         "OBSIDIAN_API_PORT": "27123"
-       }
-     }
-   }
-   ```
-
-</details>
-
-> [!NOTE]
-> **Obsidian must be open** with the Local REST API plugin running for the MCP to work. If MCP is unavailable, the skill falls back to writing files directly to your filesystem.
-
-**Verify**: In Claude Code, try `List files in my Obsidian vault`. If it returns your vault contents, you're good.
-
----
-
-### Summary: MCP Setup Checklist
-
-```
-☐ paper-search-mcp  ← npx install (no credentials needed)
-☐ mcp-zotero         ← npx install + Zotero API key + User ID
-☐ mcp-obsidian       ← npx install + Obsidian Local REST API plugin + API key
-```
 
 ---
 
@@ -391,32 +427,30 @@ Linked from the method paper — showing the intuition-first Karpathy style:
 
 ```
 paper-research-skill/
-├── skills/
-│   ├── paper-research/SKILL.md    # Pipeline orchestrator
-│   ├── paper-fetch/SKILL.md       # Search & download
-│   ├── paper-zotero/SKILL.md      # Zotero import
+├── skills/                        # Skill definitions (all agents)
+│   ├── paper-research/SKILL.md
+│   ├── paper-fetch/SKILL.md
+│   ├── paper-zotero/SKILL.md
 │   ├── paper-wiki/
-│   │   ├── SKILL.md               # Deep wiki (process + visual design system)
-│   │   └── templates/             # On-demand templates (saves ~60% tokens)
+│   │   ├── SKILL.md
+│   │   └── templates/             # On-demand templates (~60% token savings)
 │   │       ├── benchmark.md
 │   │       ├── method.md
 │   │       ├── survey.md
 │   │       ├── analysis.md
 │   │       ├── framework.md
 │   │       ├── technical-report.md
+│   │       ├── synthesis.md
 │   │       ├── concept.md
 │   │       └── moc.md
-│   └── paper-version/SKILL.md     # Version check
-├── demo/                          # Real wiki output examples
-│   ├── methods/                   #   Method paper demo
-│   ├── benchmarks/                #   Benchmark paper demo
-│   ├── concepts/                  #   Concept entry demos
-│   └── screenshots/               #   Obsidian rendering screenshots
+│   └── paper-version/SKILL.md
 ├── .claude-plugin/plugin.json     # Claude Code plugin manifest
+├── .agents/skills/                # Codex CLI skill discovery
+├── demo/                          # Real wiki output examples
 ├── CHANGELOG.md
-├── CLAUDE.md                      # Dev guidelines
+├── CLAUDE.md                      # Dev guidelines & versioning rules
 ├── README.md
-└── README.zh-CN.md                # 简体中文
+└── README.zh-CN.md
 ```
 
 ---

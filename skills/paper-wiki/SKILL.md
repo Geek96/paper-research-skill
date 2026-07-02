@@ -107,10 +107,12 @@ For a personal paper-reading folder that spans multiple unrelated research topic
     raw/                original PDFs for this topic (ungrouped by type)
     wiki/
       {type}/           surveys/ methods/ benchmarks/ analyses/ frameworks/ technical-reports/
+      concepts/         concept entries touched by this topic's papers (Step 4)
 ```
 
-- `raw/` takes over the role Zotero plays in the MCP-backed workflow — it holds the actual PDF files. Do not put PDFs under `wiki/`.
-- `wiki/{type}/` holds the generated notes, using the same Step 3 type taxonomy and templates.
+- `raw/` holds the actual PDF files. Typically listed in `.gitignore` so PDFs stay local and don't get pushed to the repo. Do not put PDFs under `wiki/`.
+- `wiki/{type}/` holds the generated paper notes, using the same Step 3 type taxonomy and templates.
+- `wiki/concepts/` replaces `Wiki/Concepts/` from Step 4 — same rules (create if missing, augment with `### As used in [[paper-slug]]` if it exists), just scoped to this topic instead of a global concepts folder.
 - Ask the user for the `{topic}` slug before creating the structure — do not infer it silently from the paper title.
 - This is a different convention from the tag-based one below (topic via folder, not via `domain/*` frontmatter). Do not mix the two inside the same project — pick one per project root.
 
@@ -345,7 +347,7 @@ After every wiki modification session (adding/updating paper pages, concept entr
 > "Wiki 已更新。是否需要 push 到 GitHub？"
 
 If yes:
-1. Stage and commit the changed files in the relevant repo (e.g. `Geek96/ICLR2027` for personalization wiki, `Geek96/paper-research-skill` for skill updates)
+1. Stage and commit the changed files in the relevant repo (the wiki's own repo, or `Geek96/paper-research-skill` for skill updates)
 2. Push to remote
 
 This ensures the GitHub repos stay in sync with local changes.

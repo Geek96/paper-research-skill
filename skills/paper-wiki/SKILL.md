@@ -97,6 +97,23 @@ Track reading progress in frontmatter:
 
 If MCP is unavailable, write all files directly to the local filesystem using the path provided by the user.
 
+### Local Filesystem Fallback Convention (no Obsidian MCP, no Zotero)
+
+For a personal paper-reading folder that spans multiple unrelated research topics (as opposed to one shared, synced wiki), use a **topic-first** layout instead of the flat `Wiki/Papers/{type}/` used above:
+
+```
+{project_root}/
+  {topic}/              e.g. rag/, memory/
+    raw/                original PDFs for this topic (ungrouped by type)
+    wiki/
+      {type}/           surveys/ methods/ benchmarks/ analyses/ frameworks/ technical-reports/
+```
+
+- `raw/` takes over the role Zotero plays in the MCP-backed workflow — it holds the actual PDF files. Do not put PDFs under `wiki/`.
+- `wiki/{type}/` holds the generated notes, using the same Step 3 type taxonomy and templates.
+- Ask the user for the `{topic}` slug before creating the structure — do not infer it silently from the paper title.
+- This is a different convention from the tag-based one below (topic via folder, not via `domain/*` frontmatter). Do not mix the two inside the same project — pick one per project root.
+
 ---
 
 ## Input
